@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
@@ -135,6 +135,54 @@ export default function DashboardShell({
     window.addEventListener('locale-changed', onLocaleChanged)
     return () => window.removeEventListener('locale-changed', onLocaleChanged)
   }, [profileAccent])
+
+  // Inactivity auto-logout (15 min) + tab close logout
+  useEffect(() => {
+    if (status !== 'authenticated') return
+
+    const INACTIVITY_LIMIT = 15 * 60 * 1000 // 15 minutes
+    let timer: ReturnType<typeof setTimeout>
+    let broadcastChannel: BroadcastChannel | null = null
+
+    const doSignOut = () => {
+      fetch('/api/auth/signout', { method: 'POST' }).then(() => {
+        window.location.href = '/login'
+      })
+    }
+
+    const resetTimer = () => {
+      clearTimeout(timer)
+      timer = setTimeout(doSignOut, INACTIVITY_LIMIT)
+    }
+
+    const activityEvents = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart']
+    activityEvents.forEach((e) => window.addEventListener(e, resetTimer, { passive: true }))
+    resetTimer()
+
+    // When this tab closes, tell all other tabs to log out
+    const handleBeforeUnload = () => {
+      try {
+        broadcastChannel?.postMessage('logout')
+      } catch {}
+    }
+
+    // Listen for logout signals from other tabs
+    try {
+      broadcastChannel = new BroadcastChannel('auth')
+      broadcastChannel.onmessage = (ev) => {
+        if (ev.data === 'logout') doSignOut()
+      }
+    } catch {}
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+
+    return () => {
+      clearTimeout(timer)
+      activityEvents.forEach((e) => window.removeEventListener(e, resetTimer))
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+      broadcastChannel?.close()
+    }
+  }, [status])
 
   function isActive(href: string) {
     if (href === '/dashboard') return pathname === '/dashboard'
