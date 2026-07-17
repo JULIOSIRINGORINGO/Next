@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Loader2 } from 'lucide-react'
+import { useTheme } from '@/context/ThemeContext'
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email'),
@@ -21,6 +22,7 @@ function LoginFormInner() {
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const { isDark } = useTheme()
 
   const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
@@ -51,7 +53,7 @@ function LoginFormInner() {
     <div className="w-full max-w-md">
       <div className="glass-card p-8">
         <div className="text-center mb-8">
-          <img src="/icon.svg" alt="Logo" className="w-12 h-12 mx-auto mb-4 object-contain" style={{ filter: 'var(--icon-invert, none)' }} />
+          <img src="/icon.svg" alt="Logo" className={`w-12 h-12 mx-auto mb-4 object-contain${isDark ? ' icon-dark' : ''}`} />
           <h1 className="text-3xl font-extrabold text-black dark:text-white">Access</h1>
           <p className="text-black dark:text-white mt-2 font-bold">Authentication required to access the dashboard</p>
         </div>

@@ -13,11 +13,10 @@
     --accent-light: color-mix(in srgb, var(--accent) 70%, white);
     --accent-subtle: color-mix(in srgb, var(--accent) 15%, transparent);
     --accent-border: color-mix(in srgb, var(--accent) 60%, transparent);
-    --icon-invert: none;
   }
 
-  .dark {
-    --icon-invert: invert(1);
+  .icon-dark {
+    filter: invert(1);
   }
 
   @supports not (color: color-mix(in srgb, red, blue)) {

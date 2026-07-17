@@ -8,6 +8,7 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/Toast';
 import { useTranslations } from 'next-intl';
+import { useTheme } from '@/context/ThemeContext';
 
 interface LoginModalProps {
     isOpen: boolean;
@@ -22,6 +23,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     const { showToast } = useToast();
     const t = useTranslations();
     const router = useRouter();
+    const { isDark } = useTheme();
     const [mounted, setMounted] = useState(false);
     useEffect(() => { setMounted(true); }, []);
     if (!mounted) return null;
@@ -78,8 +80,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                             <img
                                 src="/icon.svg"
                                 alt="Logo"
-                                className="w-full h-full object-contain"
-                                style={{ filter: 'var(--icon-invert, none)' }}
+                                className={`w-full h-full object-contain${isDark ? ' icon-dark' : ''}`}
                             />
                         </div>
 
