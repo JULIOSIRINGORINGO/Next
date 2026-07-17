@@ -5,7 +5,8 @@ import { Code, FolderOpen, Trophy, Briefcase, GraduationCap, Link2, ArrowUpRight
 
 export default async function DashboardPage() {
   const session = await auth()
-  const name = session?.user?.email?.split('@')[0] || 'Admin'
+  const profile = await prisma.profile.findFirst()
+  const name = profile?.fullName || session?.user?.email?.split('@')[0] || 'Admin'
 
   const [projectsCount, achievementsCount, skillsCount, experiencesCount, educationCount, socialLinksCount, featuredCount] = await Promise.all([
     prisma.project.count(),

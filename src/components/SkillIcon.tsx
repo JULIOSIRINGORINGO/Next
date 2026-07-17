@@ -1,9 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { getSkillIconData, loadIcon } from '@/utils/skillIconMap';
-import type { IconType } from 'react-icons';
 
 interface SkillIconProps {
     name: string;
@@ -14,15 +12,7 @@ interface SkillIconProps {
 
 export default function SkillIcon({ name, iconSlug, onDelete, showDelete }: SkillIconProps) {
     const { iconName, gradient } = getSkillIconData(iconSlug || '');
-    const [IconComponent, setIconComponent] = useState<IconType | null>(null);
-
-    useEffect(() => {
-        let cancelled = false;
-        loadIcon(iconName).then((icon) => {
-            if (!cancelled) setIconComponent(() => icon);
-        }).catch(() => {});
-        return () => { cancelled = true; };
-    }, [iconName]);
+    const IconComponent = loadIcon(iconName);
 
     return (
         <div className="group flex flex-col items-center w-14 md:w-20 gap-1 md:gap-2 cursor-pointer pt-2">

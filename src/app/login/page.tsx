@@ -102,10 +102,6 @@ function LoginFormInner() {
             )}
           </button>
         </form>
-
-        <p className="mt-6 text-center text-xs text-black dark:text-white font-bold">
-          Default: admin@portfolio.com / admin123
-        </p>
       </div>
     </div>
   )

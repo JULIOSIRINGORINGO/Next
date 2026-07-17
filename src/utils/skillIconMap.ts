@@ -1,5 +1,10 @@
 import type { IconType } from 'react-icons';
 
+import { FaAws, FaHtml5, FaCss3Alt, FaPython, FaJava, FaPhp, FaVuejs, FaAngular, FaNodeJs, FaLaravel, FaDocker, FaGit, FaLinux, FaFigma, FaReact, FaBootstrap, FaGithub } from 'react-icons/fa';
+import { SiPython, SiJavascript, SiTypescript, SiSharp, SiC, SiCplusplus, SiRust, SiGo, SiDart, SiKotlin, SiSwift, SiPhp, SiHtml5, SiCss, SiReact, SiNextdotjs, SiVuedotjs, SiAngular, SiSvelte, SiAstro, SiTailwindcss, SiFastapi, SiDjango, SiFlask, SiLaravel, SiNodedotjs, SiSqlite, SiMongodb, SiPostgresql, SiMysql, SiRedis, SiFirebase, SiGit, SiDocker, SiLinux, SiNginx, SiGooglecloud, SiVercel, SiNetlify, SiFlutter, SiGraphql, SiFigma, SiNuxt, SiVite, SiExpress, SiNestjs, SiDotnet, SiSupabase, SiGithubactions, SiPostman, SiSimpleicons, SiRuby, SiScala, SiLua, SiR, SiPerl, SiHaskell, SiElixir, SiZig, SiRemix, SiGatsby, SiMui, SiWebpack, SiRubyonrails, SiSpringboot, SiStrapi, SiFastify, SiIonic, SiElasticsearch, SiMariadb, SiPlanetscale, SiPrisma, SiKubernetes, SiTerraform, SiGitlab, SiBitbucket, SiJenkins, SiCircleci, SiJira, SiGrafana, SiPrometheus, SiN8N, SiZapier, SiGooglegemini, SiClaude, SiHuggingface, SiLangchain, SiOpenrouter, SiDigitalocean, SiCloudflare, SiPytorch, SiTensorflow, SiNumpy, SiPandas, SiScikitlearn, SiOpencv, SiJupyter, SiPoetry } from 'react-icons/si';
+import { DiJava } from 'react-icons/di';
+import { VscAzure } from 'react-icons/vsc';
+
 export interface SkillIconEntry {
     iconName: string;
     gradient: string;
@@ -68,6 +73,54 @@ const skillIconData: Record<string, SkillIconEntry> = {
     postman: { iconName: 'SiPostman', gradient: 'from-gray-700 to-gray-900', brandColor: '#FF6C37' },
     amazonaws: { iconName: 'FaAws', gradient: 'from-gray-700 to-gray-900', brandColor: '#FF9900' },
     microsoftazure: { iconName: 'VscAzure', gradient: 'from-gray-700 to-gray-900', brandColor: '#0078D4' },
+    digitalocean: { iconName: 'SiDigitalocean', gradient: 'from-blue-500 to-cyan-400', brandColor: '#0080FF' },
+    cloudflare: { iconName: 'SiCloudflare', gradient: 'from-orange-400 to-amber-500', brandColor: '#F38020' },
+    nuxt: { iconName: 'SiNuxt', gradient: 'from-gray-700 to-gray-900', brandColor: '#00DC82' },
+    remix: { iconName: 'SiRemix', gradient: 'from-blue-500 to-indigo-600', brandColor: '#3992FF' },
+    gatsby: { iconName: 'SiGatsby', gradient: 'from-purple-600 to-indigo-700', brandColor: '#663399' },
+    mui: { iconName: 'SiMui', gradient: 'from-blue-500 to-blue-700', brandColor: '#007FFF' },
+    webpack: { iconName: 'SiWebpack', gradient: 'from-blue-400 to-sky-600', brandColor: '#8DD6F9' },
+    rubyonrails: { iconName: 'SiRubyonrails', gradient: 'from-red-500 to-red-700', brandColor: '#CC0000' },
+    springboot: { iconName: 'SiSpringboot', gradient: 'from-green-500 to-green-700', brandColor: '#6DB33F' },
+    strapi: { iconName: 'SiStrapi', gradient: 'from-indigo-500 to-purple-600', brandColor: '#4945FF' },
+    fastify: { iconName: 'SiFastify', gradient: 'from-gray-600 to-gray-800', brandColor: '#000000' },
+    ionic: { iconName: 'SiIonic', gradient: 'from-blue-400 to-indigo-500', brandColor: '#3880FF' },
+    elasticsearch: { iconName: 'SiElasticsearch', gradient: 'from-yellow-400 to-amber-500', brandColor: '#005571' },
+    mariadb: { iconName: 'SiMariadb', gradient: 'from-blue-500 to-indigo-600', brandColor: '#003545' },
+    planetscale: { iconName: 'SiPlanetscale', gradient: 'from-purple-500 to-pink-500', brandColor: '#000000' },
+    prisma: { iconName: 'SiPrisma', gradient: 'from-gray-700 to-gray-900', brandColor: '#2D3748' },
+    kubernetes: { iconName: 'SiKubernetes', gradient: 'from-blue-500 to-blue-700', brandColor: '#326CE5' },
+    terraform: { iconName: 'SiTerraform', gradient: 'from-purple-600 to-indigo-700', brandColor: '#7B42BC' },
+    gitlab: { iconName: 'SiGitlab', gradient: 'from-orange-500 to-red-600', brandColor: '#FC6D26' },
+    bitbucket: { iconName: 'SiBitbucket', gradient: 'from-blue-500 to-blue-700', brandColor: '#0052CC' },
+    jenkins: { iconName: 'SiJenkins', gradient: 'from-red-400 to-red-600', brandColor: '#D33833' },
+    circleci: { iconName: 'SiCircleci', gradient: 'from-gray-600 to-gray-800', brandColor: '#343434' },
+    jira: { iconName: 'SiJira', gradient: 'from-blue-500 to-indigo-600', brandColor: '#0052CC' },
+    grafana: { iconName: 'SiGrafana', gradient: 'from-orange-400 to-amber-500', brandColor: '#F46800' },
+    prometheus: { iconName: 'SiPrometheus', gradient: 'from-orange-500 to-red-500', brandColor: '#E6522C' },
+    n8n: { iconName: 'SiN8N', gradient: 'from-rose-500 to-pink-600', brandColor: '#EA4B71' },
+    zapier: { iconName: 'SiZapier', gradient: 'from-orange-400 to-amber-500', brandColor: '#FF4A00' },
+    ruby: { iconName: 'SiRuby', gradient: 'from-red-500 to-red-700', brandColor: '#CC342D' },
+    scala: { iconName: 'SiScala', gradient: 'from-red-500 to-red-700', brandColor: '#DC322F' },
+    lua: { iconName: 'SiLua', gradient: 'from-blue-400 to-blue-600', brandColor: '#000080' },
+    r: { iconName: 'SiR', gradient: 'from-blue-500 to-indigo-600', brandColor: '#276DC3' },
+    perl: { iconName: 'SiPerl', gradient: 'from-blue-400 to-cyan-500', brandColor: '#39457E' },
+    haskell: { iconName: 'SiHaskell', gradient: 'from-purple-500 to-indigo-600', brandColor: '#5D4F85' },
+    elixir: { iconName: 'SiElixir', gradient: 'from-purple-500 to-pink-500', brandColor: '#6E4A7E' },
+    zig: { iconName: 'SiZig', gradient: 'from-amber-400 to-yellow-500', brandColor: '#F7A41D' },
+    pytorch: { iconName: 'SiPytorch', gradient: 'from-red-500 to-orange-500', brandColor: '#EE4C2C' },
+    tensorflow: { iconName: 'SiTensorflow', gradient: 'from-orange-500 to-amber-500', brandColor: '#FF6F00' },
+    numpy: { iconName: 'SiNumpy', gradient: 'from-blue-600 to-indigo-700', brandColor: '#013243' },
+    pandas: { iconName: 'SiPandas', gradient: 'from-indigo-500 to-purple-600', brandColor: '#150458' },
+    scikitlearn: { iconName: 'SiScikitlearn', gradient: 'from-orange-400 to-red-500', brandColor: '#F0923B' },
+    opencv: { iconName: 'SiOpencv', gradient: 'from-green-500 to-blue-500', brandColor: '#5C3EE8' },
+    jupyter: { iconName: 'SiJupyter', gradient: 'from-orange-400 to-red-500', brandColor: '#F37626' },
+    poetry: { iconName: 'SiPoetry', gradient: 'from-sky-400 to-blue-500', brandColor: '#60A6E0' },
+    googlegemini: { iconName: 'SiGooglegemini', gradient: 'from-blue-400 to-indigo-500', brandColor: '#1C7BF1' },
+    anthropic: { iconName: 'SiClaude', gradient: 'from-amber-300 to-orange-400', brandColor: '#D4A574' },
+    huggingface: { iconName: 'SiHuggingface', gradient: 'from-yellow-400 to-amber-500', brandColor: '#FFD21E' },
+    langchain: { iconName: 'SiLangchain', gradient: 'from-teal-500 to-green-600', brandColor: '#1C3C3C' },
+    openrouter: { iconName: 'SiOpenrouter', gradient: 'from-indigo-500 to-purple-600', brandColor: '#6366F1' },
 };
 
 const fallbackEntry: SkillIconEntry = {
@@ -95,93 +148,53 @@ const nameToSlug: Record<string, string> = {
     'github actions': 'githubactions', 'linux': 'linux',
     'vercel': 'vercel', 'netlify': 'netlify', 'figma': 'figma', 'postman': 'postman',
     'aws': 'aws', 'amazon web services': 'aws', 'azure': 'microsoftazure',
-    'google cloud': 'googlecloud',
+    'google cloud': 'googlecloud', 'remix': 'remix', 'gatsby': 'gatsby',
+    'mui': 'mui', 'material ui': 'mui', 'webpack': 'webpack', 'rails': 'rubyonrails',
+    'ruby on rails': 'rubyonrails', 'spring boot': 'springboot', 'strapi': 'strapi',
+    'fastify': 'fastify', 'ionic': 'ionic', 'elasticsearch': 'elasticsearch',
+    'mariadb': 'mariadb', 'planetscale': 'planetscale', 'prisma': 'prisma',
+    'kubernetes': 'kubernetes', 'k8s': 'kubernetes', 'terraform': 'terraform',
+    'gitlab': 'gitlab', 'bitbucket': 'bitbucket', 'jenkins': 'jenkins',
+    'circleci': 'circleci', 'jira': 'jira', 'grafana': 'grafana',
+    'prometheus': 'prometheus', 'n8n': 'n8n', 'zapier': 'zapier',
+    'digitalocean': 'digitalocean', 'cloudflare': 'cloudflare',
+    'ruby': 'ruby', 'scala': 'scala', 'lua': 'lua', 'r': 'r', 'perl': 'perl',
+    'haskell': 'haskell', 'elixir': 'elixir', 'zig': 'zig',
+    'pytorch': 'pytorch', 'tensorflow': 'tensorflow', 'numpy': 'numpy',
+    'pandas': 'pandas', 'scikit-learn': 'scikitlearn', 'scikitlearn': 'scikitlearn',
+    'opencv': 'opencv', 'jupyter': 'jupyter', 'poetry': 'poetry',
+    'google gemini': 'googlegemini', 'gemini': 'googlegemini',
+    'anthropic': 'anthropic', 'claude': 'anthropic',
+    'hugging face': 'huggingface', 'huggingface': 'huggingface',
+    'langchain': 'langchain', 'openrouter': 'openrouter', 'open router': 'openrouter',
 };
 
-const iconModuleCache: Record<string, IconType> = {};
-
-const iconLoaders: Record<string, () => Promise<{ default: IconType }>> = {
-    SiPython: () => import('react-icons/si').then(m => ({ default: m.SiPython })),
-    SiJavascript: () => import('react-icons/si').then(m => ({ default: m.SiJavascript })),
-    SiTypescript: () => import('react-icons/si').then(m => ({ default: m.SiTypescript })),
-    DiJava: () => import('react-icons/di').then(m => ({ default: m.DiJava })),
-    SiSharp: () => import('react-icons/si').then(m => ({ default: m.SiSharp })),
-    SiC: () => import('react-icons/si').then(m => ({ default: m.SiC })),
-    SiCplusplus: () => import('react-icons/si').then(m => ({ default: m.SiCplusplus })),
-    SiRust: () => import('react-icons/si').then(m => ({ default: m.SiRust })),
-    SiGo: () => import('react-icons/si').then(m => ({ default: m.SiGo })),
-    SiDart: () => import('react-icons/si').then(m => ({ default: m.SiDart })),
-    SiKotlin: () => import('react-icons/si').then(m => ({ default: m.SiKotlin })),
-    SiSwift: () => import('react-icons/si').then(m => ({ default: m.SiSwift })),
-    SiPhp: () => import('react-icons/si').then(m => ({ default: m.SiPhp })),
-    SiHtml5: () => import('react-icons/si').then(m => ({ default: m.SiHtml5 })),
-    SiCss: () => import('react-icons/si').then(m => ({ default: m.SiCss })),
-    SiReact: () => import('react-icons/si').then(m => ({ default: m.SiReact })),
-    SiNextdotjs: () => import('react-icons/si').then(m => ({ default: m.SiNextdotjs })),
-    SiVuedotjs: () => import('react-icons/si').then(m => ({ default: m.SiVuedotjs })),
-    SiAngular: () => import('react-icons/si').then(m => ({ default: m.SiAngular })),
-    SiSvelte: () => import('react-icons/si').then(m => ({ default: m.SiSvelte })),
-    SiAstro: () => import('react-icons/si').then(m => ({ default: m.SiAstro })),
-    SiTailwindcss: () => import('react-icons/si').then(m => ({ default: m.SiTailwindcss })),
-    SiFastapi: () => import('react-icons/si').then(m => ({ default: m.SiFastapi })),
-    SiDjango: () => import('react-icons/si').then(m => ({ default: m.SiDjango })),
-    SiFlask: () => import('react-icons/si').then(m => ({ default: m.SiFlask })),
-    SiLaravel: () => import('react-icons/si').then(m => ({ default: m.SiLaravel })),
-    SiNodedotjs: () => import('react-icons/si').then(m => ({ default: m.SiNodedotjs })),
-    SiSqlite: () => import('react-icons/si').then(m => ({ default: m.SiSqlite })),
-    SiMongodb: () => import('react-icons/si').then(m => ({ default: m.SiMongodb })),
-    SiPostgresql: () => import('react-icons/si').then(m => ({ default: m.SiPostgresql })),
-    SiMysql: () => import('react-icons/si').then(m => ({ default: m.SiMysql })),
-    SiRedis: () => import('react-icons/si').then(m => ({ default: m.SiRedis })),
-    SiFirebase: () => import('react-icons/si').then(m => ({ default: m.SiFirebase })),
-    SiGit: () => import('react-icons/si').then(m => ({ default: m.SiGit })),
-    SiDocker: () => import('react-icons/si').then(m => ({ default: m.SiDocker })),
-    SiLinux: () => import('react-icons/si').then(m => ({ default: m.SiLinux })),
-    SiNginx: () => import('react-icons/si').then(m => ({ default: m.SiNginx })),
-    FaAws: () => import('react-icons/fa').then(m => ({ default: m.FaAws })),
-    SiGooglecloud: () => import('react-icons/si').then(m => ({ default: m.SiGooglecloud })),
-    SiVercel: () => import('react-icons/si').then(m => ({ default: m.SiVercel })),
-    SiNetlify: () => import('react-icons/si').then(m => ({ default: m.SiNetlify })),
-    SiFlutter: () => import('react-icons/si').then(m => ({ default: m.SiFlutter })),
-    SiGraphql: () => import('react-icons/si').then(m => ({ default: m.SiGraphql })),
-    SiFigma: () => import('react-icons/si').then(m => ({ default: m.SiFigma })),
-    SiNuxt: () => import('react-icons/si').then(m => ({ default: m.SiNuxt })),
-    FaBootstrap: () => import('react-icons/fa').then(m => ({ default: m.FaBootstrap })),
-    SiVite: () => import('react-icons/si').then(m => ({ default: m.SiVite })),
-    SiExpress: () => import('react-icons/si').then(m => ({ default: m.SiExpress })),
-    SiNestjs: () => import('react-icons/si').then(m => ({ default: m.SiNestjs })),
-    SiDotnet: () => import('react-icons/si').then(m => ({ default: m.SiDotnet })),
-    FaReact: () => import('react-icons/fa').then(m => ({ default: m.FaReact })),
-    SiSupabase: () => import('react-icons/si').then(m => ({ default: m.SiSupabase })),
-    FaGithub: () => import('react-icons/fa').then(m => ({ default: m.FaGithub })),
-    SiGithubactions: () => import('react-icons/si').then(m => ({ default: m.SiGithubactions })),
-    SiPostman: () => import('react-icons/si').then(m => ({ default: m.SiPostman })),
-    VscAzure: () => import('react-icons/vsc').then(m => ({ default: m.VscAzure })),
-    SiSimpleicons: () => import('react-icons/si').then(m => ({ default: m.SiSimpleicons })),
+const iconMap: Record<string, IconType> = {
+    SiPython, SiJavascript, SiTypescript, DiJava, SiSharp, SiC, SiCplusplus,
+    SiRust, SiGo, SiDart, SiKotlin, SiSwift, SiPhp, SiHtml5, SiCss,
+    SiReact, SiNextdotjs, SiVuedotjs, SiAngular, SiSvelte, SiAstro,
+    SiTailwindcss, SiFastapi, SiDjango, SiFlask, SiLaravel, SiNodedotjs,
+    SiSqlite, SiMongodb, SiPostgresql, SiMysql, SiRedis, SiFirebase,
+    SiGit, SiDocker, SiLinux, SiNginx, SiGooglecloud, SiVercel, SiNetlify,
+    SiFlutter, SiGraphql, SiFigma, SiNuxt, SiVite, SiExpress, SiNestjs,
+    SiDotnet, SiSupabase, SiGithubactions, SiPostman, SiSimpleicons,
+    SiRuby, SiScala, SiLua, SiR, SiPerl, SiHaskell, SiElixir, SiZig,
+    SiRemix, SiGatsby, SiMui, SiWebpack, SiRubyonrails, SiSpringboot,
+    SiStrapi, SiFastify, SiIonic, SiElasticsearch,
+    SiMariadb, SiPlanetscale, SiPrisma, SiKubernetes,
+    SiTerraform, SiGitlab, SiBitbucket, SiJenkins, SiCircleci,
+    SiJira, SiGrafana, SiPrometheus, SiN8N, SiZapier, SiGooglegemini, SiClaude,
+    SiHuggingface, SiLangchain, SiOpenrouter, SiDigitalocean, SiCloudflare,
+    SiPytorch, SiTensorflow, SiNumpy, SiPandas,
+    SiScikitlearn, SiOpencv, SiJupyter, SiPoetry,
+    FaAws, FaHtml5, FaCss3Alt, FaPython, FaJava, FaPhp, FaVuejs, FaAngular,
+    FaNodeJs, FaLaravel, FaDocker, FaGit, FaLinux, FaFigma, FaReact,
+    FaBootstrap, FaGithub,
+    VscAzure,
 };
 
-export async function loadIcon(iconName: string): Promise<IconType> {
-    if (iconModuleCache[iconName]) return iconModuleCache[iconName];
-    const loader = iconLoaders[iconName];
-    if (loader) {
-        const mod = await loader();
-        iconModuleCache[iconName] = mod.default;
-        return mod.default;
-    }
-    // try si-icons as fallback for simple-icons names
-    if (iconName.startsWith('Si')) {
-        try {
-            const mod = await import('react-icons/si');
-            const icon = (mod as any)[iconName];
-            if (icon) {
-                iconModuleCache[iconName] = icon;
-                return icon;
-            }
-        } catch {}
-    }
-    const fallback = await iconLoaders['SiSimpleicons']();
-    iconModuleCache[iconName] = fallback.default;
-    return fallback.default;
+export function loadIcon(iconName: string): IconType | null {
+    return iconMap[iconName] || null;
 }
 
 export function getSkillIconData(slug: string): SkillIconEntry {

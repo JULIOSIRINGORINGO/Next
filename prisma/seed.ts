@@ -62,14 +62,14 @@ async function main() {
   await prisma.skill.deleteMany()
 
   const skills = [
-    { name: 'TypeScript', category: 'Language', iconName: 'typescript', proficiency: 90, featured: true, order: 0 },
+    { name: 'TypeScript', category: 'Languages', iconName: 'typescript', proficiency: 90, featured: true, order: 0 },
     { name: 'React', category: 'Frontend', iconName: 'react', proficiency: 85, featured: true, order: 1 },
-    { name: 'Next.js', category: 'Framework', iconName: 'nextjs', proficiency: 85, featured: true, order: 2 },
-    { name: 'Node.js', category: 'Backend', iconName: 'nodejs', proficiency: 80, featured: true, order: 3 },
+    { name: 'Next.js', category: 'Frontend', iconName: 'nextdotjs', proficiency: 85, featured: true, order: 2 },
+    { name: 'Node.js', category: 'Backend', iconName: 'nodedotjs', proficiency: 80, featured: true, order: 3 },
     { name: 'PostgreSQL', category: 'Database', iconName: 'postgresql', proficiency: 80, featured: false, order: 4 },
-    { name: 'Tailwind CSS', category: 'Styling', iconName: 'tailwindcss', proficiency: 90, featured: false, order: 5 },
-    { name: 'Docker', category: 'DevOps', iconName: 'docker', proficiency: 70, featured: false, order: 6 },
-    { name: 'Git', category: 'Tool', iconName: 'git', proficiency: 85, featured: false, order: 7 },
+    { name: 'Tailwind CSS', category: 'Frontend', iconName: 'tailwindcss', proficiency: 90, featured: false, order: 5 },
+    { name: 'Docker', category: 'Tools & DevOps', iconName: 'docker', proficiency: 70, featured: false, order: 6 },
+    { name: 'Git', category: 'Tools & DevOps', iconName: 'git', proficiency: 85, featured: false, order: 7 },
   ]
 
   for (const s of skills) {

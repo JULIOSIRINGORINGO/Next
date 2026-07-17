@@ -25,7 +25,7 @@ interface HomeClientProps {
     skills: Skill[];
 }
 
-const CATEGORY_ORDER = ['Languages', 'Frontend', 'Backend', 'Mobile', 'Database', 'Tools & DevOps', 'Cloud'];
+const CATEGORY_ORDER = ['Languages', 'Frontend', 'Backend', 'Mobile', 'Database', 'Tools & DevOps', 'Cloud', 'AI'];
 
 function SkillItem({ skill }: { skill: Skill }) {
     const ref = useRef(null);

@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { Search } from 'lucide-react'
 import { toast } from 'sonner'
 import { techList } from '@/lib/techList'
-import { getSkillIconData } from '@/utils/skillIconMap'
 import { CATEGORIES, getCategoryForSlug, filterByCategory } from '@/lib/techCategories'
 import { TechIcon } from '@/components/TechIcon'
 
@@ -113,22 +112,21 @@ export default function SkillsPage() {
                 {group.items.map(tech => {
                   const isActive = activeSlugs.has(tech.slug)
                   const isToggling = toggling === tech.slug
-                  const { brandColor } = getSkillIconData(tech.slug)
                   return (
                     <button
                       key={tech.slug}
                       onClick={() => handleToggle(tech)}
                       disabled={isToggling}
                       title={tech.name}
-                      className={`group relative aspect-square rounded-xl border-2 flex flex-col items-center justify-center gap-1 transition-all duration-300 ${
+                      className={`group relative aspect-square rounded-xl border-2 flex flex-col items-center justify-center gap-1.5 transition-all duration-300 ${
                         isToggling ? 'opacity-50 scale-95' : ''
                       }`}
                       style={
                         isActive
                           ? {
-                              borderColor: brandColor,
-                              background: `linear-gradient(135deg, ${brandColor}dd, ${brandColor}88)`,
-                              boxShadow: `0 4px 14px ${brandColor}44`,
+                              borderColor: tech.color,
+                              background: `linear-gradient(135deg, ${tech.color}dd, ${tech.color}88)`,
+                              boxShadow: `0 4px 14px ${tech.color}44`,
                             }
                           : undefined
                       }
@@ -139,10 +137,10 @@ export default function SkillsPage() {
 
                       <div className={`relative z-10 transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-105'}`}>
                         <div className={isActive ? 'text-white' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300'}>
-                          <TechIcon name={tech.icon} size={22} />
+                          <TechIcon name={tech.icon} size={28} />
                         </div>
                       </div>
-                      <span className={`relative z-10 text-[9px] font-bold leading-tight text-center px-1 truncate w-full ${isActive ? 'text-white' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300'}`}>
+                      <span className={`relative z-10 text-[10px] font-bold leading-tight text-center px-1 truncate w-full ${isActive ? 'text-white' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300'}`}>
                         {tech.name}
                       </span>
                     </button>

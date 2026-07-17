@@ -1,13 +1,14 @@
-export const CATEGORIES = ['Languages', 'Frontend', 'Backend', 'Mobile', 'Database', 'Tools & DevOps', 'Cloud'] as const
+export const CATEGORIES = ['Languages', 'Frontend', 'Backend', 'Mobile', 'Database', 'Tools & DevOps', 'Cloud', 'AI'] as const
 
 const CATEGORY_SLUGS: Record<string, string[]> = {
-  Languages: ['html5', 'css3', 'javascript', 'typescript', 'python', 'java', 'csharp', 'go', 'kotlin', 'swift', 'dart', 'php'],
-  Frontend: ['react', 'nextdotjs', 'vuedotjs', 'nuxtdotjs', 'angular', 'svelte', 'astro', 'tailwindcss', 'bootstrap', 'vite'],
-  Backend: ['nodedotjs', 'fastapi', 'django', 'flask', 'laravel', 'express', 'nestjs', 'graphql', 'dotnet'],
-  Mobile: ['flutter', 'reactnative'],
-  Database: ['postgresql', 'mysql', 'sqlite', 'mongodb', 'redis', 'supabase', 'firebase'],
-  'Tools & DevOps': ['docker', 'git', 'github', 'githubactions', 'linux', 'vercel', 'netlify', 'figma', 'postman'],
-  Cloud: ['amazonaws', 'microsoftazure', 'googlecloud'],
+  Languages: ['html5', 'css3', 'javascript', 'typescript', 'python', 'java', 'csharp', 'c', 'cplusplus', 'go', 'rust', 'kotlin', 'swift', 'dart', 'php', 'ruby', 'scala', 'lua', 'r', 'perl', 'haskell', 'elixir', 'zig'],
+  Frontend: ['react', 'nextdotjs', 'vuedotjs', 'nuxtdotjs', 'angular', 'svelte', 'astro', 'remix', 'gatsby', 'tailwindcss', 'bootstrap', 'mui', 'vite', 'webpack'],
+  Backend: ['nodedotjs', 'fastapi', 'django', 'flask', 'rubyonrails', 'springboot', 'laravel', 'express', 'fastify', 'nestjs', 'graphql', 'dotnet', 'strapi', 'pytorch', 'tensorflow', 'numpy', 'pandas', 'scikitlearn', 'opencv', 'jupyter', 'poetry'],
+  Mobile: ['flutter', 'swiftui', 'ionic'],
+  Database: ['postgresql', 'mysql', 'sqlite', 'mongodb', 'redis', 'elasticsearch', 'supabase', 'firebase', 'mariadb', 'planetscale', 'prisma'],
+  'Tools & DevOps': ['docker', 'kubernetes', 'terraform', 'git', 'github', 'gitlab', 'bitbucket', 'githubactions', 'jenkins', 'circleci', 'linux', 'vercel', 'netlify', 'figma', 'postman', 'jira', 'grafana', 'prometheus', 'n8n', 'zapier'],
+  Cloud: ['amazonaws', 'microsoftazure', 'googlecloud', 'digitalocean', 'cloudflare'],
+  AI: ['googlegemini', 'anthropic', 'huggingface', 'langchain', 'openrouter'],
 }
 
 export function getCategoryForSlug(slug: string): string {

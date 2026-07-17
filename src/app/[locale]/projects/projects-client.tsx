@@ -1,25 +1,16 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, Star, Layout } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { getSkillIconData, loadIcon } from '@/utils/skillIconMap';
 import { optimizeCloudinaryUrl } from '@/utils/cloudinary';
-import type { IconType } from 'react-icons';
 
 function TechBadge({ tech }: { tech: string }) {
-    const [IconComponent, setIconComponent] = useState<IconType | null>(null);
     const { iconName, brandColor } = getSkillIconData(tech);
+    const IconComponent = loadIcon(iconName);
     const isWhite = brandColor?.toLowerCase() === '#ffffff' || brandColor?.toLowerCase() === 'white';
-
-    useEffect(() => {
-        let cancelled = false;
-        loadIcon(iconName).then((icon) => {
-            if (!cancelled) setIconComponent(() => icon);
-        });
-        return () => { cancelled = true; };
-    }, [iconName]);
 
     return (
         <div className="flex flex-col items-center justify-center gap-1">
