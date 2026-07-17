@@ -45,10 +45,10 @@ const navItems: NavItem[] = [
   { href: '/dashboard/education', labelKey: 'admin.education', icon: GraduationCap },
   { href: '/dashboard/achievements', labelKey: 'admin.achievements', icon: Trophy },
   { href: '/dashboard/social-links', labelKey: 'admin.social_links', icon: Link2 },
-  { href: '/dashboard/changelog', labelKey: 'admin.changelog', icon: Tag },
   { divider: true },
   { href: '/dashboard/theme', labelKey: 'admin.theme', icon: Palette },
   { href: '/dashboard/account', labelKey: 'admin.account', icon: Settings },
+  { href: '/dashboard/changelog', labelKey: 'admin.changelog', icon: Tag },
 ]
 
 function getPageTitle(pathname: string, t: (key: string) => string): string {
