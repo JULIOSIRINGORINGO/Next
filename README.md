@@ -52,7 +52,4 @@ Push to `main` branch triggers auto-deploy on Vercel.
 git push origin main
 ```
 
-## Login
 
-- **Email:** admin@portfolio.com
-- **Password:** admin123
