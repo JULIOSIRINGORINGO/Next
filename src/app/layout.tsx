@@ -1,42 +1,55 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
+import { prisma } from '@/lib/prisma'
 import '@/app/globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
-export const metadata: Metadata = {
-  title: {
-    default: 'Portfolio | Full Stack Developer',
-    template: '%s | Portfolio',
-  },
-  description: 'Personal portfolio showcasing projects, skills, and experience as a Full Stack Developer',
-  keywords: ['developer', 'portfolio', 'full stack', 'React', 'Next.js', 'TypeScript', 'Python', 'FastAPI'],
-  authors: [{ name: 'Your Name' }],
-  creator: 'Your Name',
-  publisher: 'Your Name',
-  robots: 'index, follow',
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://your-domain.com',
-    siteName: 'Portfolio',
-    title: 'Portfolio | Full Stack Developer',
+async function getProfileName(): Promise<string> {
+  try {
+    const profile = await prisma.profile.findFirst()
+    return profile?.fullName || 'Portfolio'
+  } catch {
+    return 'Portfolio'
+  }
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const name = await getProfileName()
+  return {
+    title: {
+      default: `Portfolio | ${name}`,
+      template: `%s | ${name}`,
+    },
     description: 'Personal portfolio showcasing projects, skills, and experience',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Portfolio Preview',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Portfolio | Full Stack Developer',
-    description: 'Personal portfolio showcasing projects, skills, and experience',
-    images: ['/og-image.png'],
-  },
+    keywords: ['developer', 'portfolio', 'full stack', 'React', 'Next.js', 'TypeScript', 'Python', 'FastAPI'],
+    authors: [{ name }],
+    creator: name,
+    publisher: name,
+    robots: 'index, follow',
+    openGraph: {
+      type: 'website',
+      locale: 'en_US',
+      url: 'https://portofolio-nextjs-neon.vercel.app',
+      siteName: `Portfolio | ${name}`,
+      title: `Portfolio | ${name}`,
+      description: 'Personal portfolio showcasing projects, skills, and experience',
+      images: [
+        {
+          url: '/og-image.png',
+          width: 1200,
+          height: 630,
+          alt: 'Portfolio Preview',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `Portfolio | ${name}`,
+      description: 'Personal portfolio showcasing projects, skills, and experience',
+      images: ['/og-image.png'],
+    },
+  }
 }
 
 export const viewport: Viewport = {
