@@ -1,0 +1,202 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String    @map("password_hash")
+  role          String    @default("admin")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  profile       Profile?
+  accounts      Account[]
+  sessions      Session[]
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String? @map("session_state")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model Profile {
+  id            String   @id @default(cuid())
+  userId        String   @unique @map("user_id")
+  fullName      String   @map("full_name")
+  headline      String?
+  bioHome       String?  @db.Text @map("bio_home")
+  bioAbout      String?  @db.Text @map("bio_about")
+  avatarUrl     String?  @map("avatar_url")
+  accentColor   String   @default("#3B82F6") @map("accent_color")
+  email         String?
+  phone         String?
+  location      String?
+  website       String?
+  githubUrl     String?  @map("github_url")
+  linkedinUrl   String?  @map("linkedin_url")
+  twitterUrl    String?  @map("twitter_url")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("profiles")
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  imageUrl    String?  @map("image_url")
+  liveUrl     String?  @map("live_url")
+  githubUrl   String?  @map("github_url")
+  techStack   String[] @map("tech_stack")
+  featured    Boolean  @default(false)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("projects")
+}
+
+model Achievement {
+  id            String                   @id @default(cuid())
+  title         String
+  description   String                   @db.Text
+  issuer        String?
+  date          DateTime
+  imageUrl      String?                  @map("image_url")
+  category      String?
+  credentialId  String?                  @map("credential_id")
+  credentialUrl String?                  @map("credential_url")
+  type          String?
+  featured      Boolean                  @default(false)
+  order         Int                      @default(0)
+  createdAt     DateTime                 @default(now()) @map("created_at")
+  updatedAt     DateTime                 @updatedAt @map("updated_at")
+  translations  AchievementTranslation[]
+
+  @@map("achievements")
+}
+
+model AchievementTranslation {
+  id            String       @id @default(cuid())
+  achievementId String       @map("achievement_id")
+  locale        String
+  title         String
+  description   String       @db.Text
+  issuer        String?
+  achievement   Achievement  @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+
+  @@unique([achievementId, locale])
+  @@map("achievement_translations")
+}
+
+model Skill {
+  id         String   @id @default(cuid())
+  name       String
+  category   String
+  iconName   String?  @map("icon_name")
+  proficiency Int     @default(80)
+  featured   Boolean  @default(false)
+  order      Int      @default(0)
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@map("skills")
+}
+
+model WorkExperience {
+  id               String   @id @default(cuid())
+  company          String
+  companyLogoUrl   String?  @map("company_logo_url")
+  position         String
+  location         String?
+  startDate        DateTime @map("start_date")
+  endDate          DateTime? @map("end_date")
+  current          Boolean  @default(false)
+  description      String   @db.Text
+  employmentType   String?  @map("employment_type")
+  workType         String?  @map("work_type")
+  responsibilities Json
+  whatILearned     Json?    @map("what_i_learned")
+  impact           Json?
+  order            Int      @default(0)
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  @@map("work_experiences")
+}
+
+model Education {
+  id                  String   @id @default(cuid())
+  institution         String
+  institutionLogoUrl  String?  @map("institution_logo_url")
+  degree              String
+  fieldOfStudy        String?  @map("field_of_study")
+  location            String?
+  gpa                 String?
+  startDate           DateTime @map("start_date")
+  endDate             DateTime? @map("end_date")
+  current             Boolean  @default(false)
+  description         String?  @db.Text
+  order               Int      @default(0)
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  @@map("educations")
+}
+
+model SocialLink {
+  id        String   @id @default(cuid())
+  platform  String
+  title     String
+  description String?
+  url       String
+  isFeatured Boolean   @default(false) @map("is_featured")
+  order     Int       @default(0)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  @@map("social_links")
+}

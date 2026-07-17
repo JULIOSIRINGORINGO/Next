@@ -1,0 +1,5 @@
+export function optimizeCloudinaryUrl(url: string | null | undefined): string {
+    if (!url || !url.includes('cloudinary.com')) return url || '';
+    if (url.includes('/f_auto,q_auto/')) return url;
+    return url.replace('/upload/', '/upload/f_auto,q_auto/');
+}
