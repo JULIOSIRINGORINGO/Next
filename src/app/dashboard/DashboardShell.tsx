@@ -25,6 +25,7 @@ import {
   Loader2,
   Palette,
   Settings,
+  Tag,
 } from 'lucide-react'
 import { optimizeCloudinaryUrl } from '@/utils/cloudinary'
 import en from '@/messages/en.json'
@@ -44,6 +45,7 @@ const navItems: NavItem[] = [
   { href: '/dashboard/education', labelKey: 'admin.education', icon: GraduationCap },
   { href: '/dashboard/achievements', labelKey: 'admin.achievements', icon: Trophy },
   { href: '/dashboard/social-links', labelKey: 'admin.social_links', icon: Link2 },
+  { href: '/dashboard/changelog', labelKey: 'admin.changelog', icon: Tag },
   { divider: true },
   { href: '/dashboard/theme', labelKey: 'admin.theme', icon: Palette },
   { href: '/dashboard/account', labelKey: 'admin.account', icon: Settings },
@@ -63,6 +65,7 @@ function getPageTitle(pathname: string, t: (key: string) => string): string {
     education: 'admin.education',
     achievements: 'admin.achievements',
     'social-links': 'admin.social_links',
+    changelog: 'admin.changelog',
     theme: 'admin.theme',
     account: 'admin.account',
   }
