@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { useTheme } from '@/context/ThemeContext'
-import { useSession } from 'next-auth/react'
+import { useSession, signOut } from 'next-auth/react'
 import {
   LayoutDashboard,
   User,
@@ -145,9 +145,7 @@ export default function DashboardShell({
     let broadcastChannel: BroadcastChannel | null = null
 
     const doSignOut = () => {
-      fetch('/api/auth/signout', { method: 'POST' }).then(() => {
-        window.location.href = '/login'
-      })
+      signOut({ callbackUrl: '/login' })
     }
 
     const resetTimer = () => {

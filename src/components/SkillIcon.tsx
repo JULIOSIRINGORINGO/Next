@@ -20,7 +20,7 @@ export default function SkillIcon({ name, iconSlug, onDelete, showDelete }: Skil
         let cancelled = false;
         loadIcon(iconName).then((icon) => {
             if (!cancelled) setIconComponent(() => icon);
-        });
+        }).catch(() => {});
         return () => { cancelled = true; };
     }, [iconName]);
 

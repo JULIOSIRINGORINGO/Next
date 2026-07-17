@@ -11,7 +11,7 @@ function TechIconInner({ name, size = 24, color }: { name: string; size?: number
     let cancelled = false
     loadIcon(name).then(comp => {
       if (!cancelled) setIcon(comp)
-    })
+    }).catch(() => {})
     return () => { cancelled = true }
   }, [name])
 
