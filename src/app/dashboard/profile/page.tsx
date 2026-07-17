@@ -4,17 +4,20 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Pencil, Mail, Phone, MapPin, Globe, ExternalLink, User } from 'lucide-react'
 import { optimizeCloudinaryUrl } from '@/utils/cloudinary'
+import { getDashboardLocale, localize } from '@/lib/dashboard-locale'
 
 export default async function ProfilePage() {
   const session = await auth()
   const profile = await prisma.profile.findUnique({ where: { userId: session!.user.id! } })
+  const locale = await getDashboardLocale()
+  const p = profile ? localize(profile, locale, ['fullName', 'headline', 'bioHome', 'bioAbout', 'location']) : null
 
   const avatarUrl = optimizeCloudinaryUrl(profile?.avatarUrl)
 
   const fields = [
     { label: 'Email', value: profile?.email, icon: Mail },
     { label: 'Phone', value: profile?.phone, icon: Phone },
-    { label: 'Location', value: profile?.location, icon: MapPin },
+    { label: 'Location', value: p?.location || profile?.location, icon: MapPin },
     { label: 'Website', value: profile?.website, icon: Globe, href: profile?.website },
     { label: 'GitHub', value: profile?.githubUrl, icon: ExternalLink, href: profile?.githubUrl },
     { label: 'LinkedIn', value: profile?.linkedinUrl, icon: ExternalLink, href: profile?.linkedinUrl },
@@ -28,14 +31,14 @@ export default async function ProfilePage() {
         <div className="flex items-center gap-5 p-6 border-b border-slate-100 dark:border-slate-800">
           <div className="h-20 w-20 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden shrink-0">
             {avatarUrl ? (
-              <Image src={avatarUrl} alt={profile?.fullName || 'Avatar'} width={80} height={80} unoptimized className="h-full w-full object-cover" />
+              <Image src={avatarUrl} alt={p?.fullName || profile?.fullName || 'Avatar'} width={80} height={80} unoptimized className="h-full w-full object-cover" />
             ) : (
               <User size={32} className="text-slate-300" />
             )}
           </div>
           <div className="flex-1 min-w-0">
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white">{profile?.fullName || 'Your Name'}</h2>
-            <p className="text-sm text-slate-500 dark:text-slate-400">{profile?.headline || 'Add a headline'}</p>
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">{p?.fullName || profile?.fullName || 'Your Name'}</h2>
+            <p className="text-sm text-slate-500 dark:text-slate-400">{p?.headline || profile?.headline || 'Add a headline'}</p>
           </div>
           <Link
             href="/dashboard/profile/edit"
@@ -47,19 +50,19 @@ export default async function ProfilePage() {
         </div>
 
         {/* Bio */}
-        {(profile?.bioHome || profile?.bioAbout) && (
+        {(p?.bioHome || profile?.bioHome || p?.bioAbout || profile?.bioAbout) && (
           <div className="p-6 border-b border-slate-100 dark:border-slate-800">
             <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-2">Bio</h3>
-            {profile.bioHome && (
+            {(p?.bioHome || profile?.bioHome) && (
               <div className="mb-3">
                 <span className="text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wide">Home</span>
-                <p className="text-sm text-slate-600 dark:text-slate-300 mt-1 whitespace-pre-wrap">{profile.bioHome}</p>
+                <p className="text-sm text-slate-600 dark:text-slate-300 mt-1 whitespace-pre-wrap">{p?.bioHome || profile?.bioHome}</p>
               </div>
             )}
-            {profile.bioAbout && (
+            {(p?.bioAbout || profile?.bioAbout) && (
               <div>
                 <span className="text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wide">About</span>
-                <p className="text-sm text-slate-600 dark:text-slate-300 mt-1 whitespace-pre-wrap">{profile.bioAbout}</p>
+                <p className="text-sm text-slate-600 dark:text-slate-300 mt-1 whitespace-pre-wrap">{p?.bioAbout || profile?.bioAbout}</p>
               </div>
             )}
           </div>

@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 import { Plus, Edit, Trash2, Globe, Trophy } from 'lucide-react'
 import { deleteAchievement } from '@/actions/achievements'
+import { getDashboardLocale, localize } from '@/lib/dashboard-locale'
 
 async function deleteAchievementAction(formData: FormData) {
   'use server'
@@ -13,18 +14,28 @@ export default async function AchievementsPage() {
     orderBy: { order: 'asc' },
     include: { translations: true },
   })
+  const locale = await getDashboardLocale()
+  const displayAchs = achievements.map(a => {
+    const t = a.translations?.find((tr: any) => tr.locale === locale)
+    return {
+      ...a,
+      title: t?.title || a.title,
+      description: t?.description || a.description,
+      issuer: t?.issuer || a.issuer,
+    }
+  })
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <p className="text-sm text-slate-500 dark:text-slate-400">{achievements.length} achievement{achievements.length !== 1 ? 's' : ''} total</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400">{displayAchs.length} achievement{displayAchs.length !== 1 ? 's' : ''} total</p>
         <Link href="/dashboard/achievements/new" className="inline-flex items-center gap-2 rounded-lg bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90 transition">
           <Plus size={16} />
           Add Achievement
         </Link>
       </div>
 
-      {achievements.length === 0 ? (
+      {displayAchs.length === 0 ? (
         <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-12 text-center">
           <Trophy size={40} className="mx-auto text-slate-300 mb-3" />
           <p className="text-slate-500 dark:text-slate-400 mb-4">No achievements yet</p>
@@ -47,7 +58,7 @@ export default async function AchievementsPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-              {achievements.map((a) => (
+              {displayAchs.map((a) => (
                 <tr key={a.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
                   <td className="px-5 py-3.5">
                     <div className="font-medium text-slate-900 dark:text-white">{a.title}</div>

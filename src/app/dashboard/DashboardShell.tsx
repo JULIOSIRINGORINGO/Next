@@ -112,21 +112,25 @@ export default function DashboardShell({
 
   useEffect(() => {
     const saved = localStorage.getItem('portfolio_locale') as 'en' | 'id' | null
-    if (saved === 'en' || saved === 'id') setLocale(saved)
+    if (saved === 'en' || saved === 'id') {
+      setLocale(saved)
+      document.cookie = `locale=${saved};path=/;max-age=31536000`
+    }
 
     const savedColor = localStorage.getItem('accent_color')
     if (savedColor) {
       document.documentElement.style.setProperty('--accent', savedColor)
-    }
-
-    if (profileAccent) {
+    } else if (profileAccent) {
       document.documentElement.style.setProperty('--accent', profileAccent)
       localStorage.setItem('accent_color', profileAccent)
     }
 
     const onLocaleChanged = () => {
       const saved = localStorage.getItem('portfolio_locale') as 'en' | 'id' | null
-      if (saved === 'en' || saved === 'id') setLocale(saved)
+      if (saved === 'en' || saved === 'id') {
+        setLocale(saved)
+        document.cookie = `locale=${saved};path=/;max-age=31536000`
+      }
     }
     window.addEventListener('locale-changed', onLocaleChanged)
     return () => window.removeEventListener('locale-changed', onLocaleChanged)
@@ -164,7 +168,7 @@ export default function DashboardShell({
       >
         {/* Logo */}
         <div className="flex h-16 items-center gap-3 px-5 border-b border-slate-800 shrink-0">
-          <img src="/icon.svg" alt="Logo" className="h-8 w-8 object-contain" />
+          <img src="/icon.svg" alt="Logo" className="h-8 w-8 object-contain invert" />
           <div className="flex-1 min-w-0">
             <span className="text-sm font-semibold text-white">Portfolio <span className="text-[10px] text-slate-500 font-normal">v0.5</span></span>
             <span className="block text-[11px] text-slate-400">{t('admin.panel_title')}</span>

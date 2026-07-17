@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 import { Plus, Edit, Trash2, ExternalLink, Github, FolderOpen } from 'lucide-react'
 import { deleteProject } from '@/actions/projects'
+import { getDashboardLocale, localize } from '@/lib/dashboard-locale'
 
 async function deleteProjectAction(formData: FormData) {
   'use server'
@@ -10,6 +11,11 @@ async function deleteProjectAction(formData: FormData) {
 
 export default async function ProjectsPage() {
   const projects = await prisma.project.findMany({ orderBy: { order: 'asc' } })
+  const locale = await getDashboardLocale()
+  const displayProjects = projects.map(p => {
+    const l = localize(p, locale, ['title', 'description'])
+    return { ...p, title: l.title, description: l.description }
+  })
 
   return (
     <div className="space-y-6">
@@ -21,7 +27,7 @@ export default async function ProjectsPage() {
         </Link>
       </div>
 
-      {projects.length === 0 ? (
+      {displayProjects.length === 0 ? (
         <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-12 text-center">
           <FolderOpen size={40} className="mx-auto text-slate-300 mb-3" />
           <p className="text-slate-500 dark:text-slate-400 mb-4">No projects yet</p>
@@ -43,7 +49,7 @@ export default async function ProjectsPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-              {projects.map((project) => (
+              {displayProjects.map((project) => (
                 <tr key={project.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
                   <td className="px-5 py-3.5">
                     <div className="font-medium text-slate-900 dark:text-white">{project.title}</div>

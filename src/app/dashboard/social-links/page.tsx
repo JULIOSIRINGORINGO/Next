@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 import { Plus, Edit, Trash2, ExternalLink, Link2 } from 'lucide-react'
 import { deleteSocialLink } from '@/actions/socialLinks'
+import { getDashboardLocale, localize } from '@/lib/dashboard-locale'
 
 async function deleteLinkAction(formData: FormData) {
   'use server'
@@ -10,18 +11,23 @@ async function deleteLinkAction(formData: FormData) {
 
 export default async function SocialLinksPage() {
   const links = await prisma.socialLink.findMany({ orderBy: { order: 'asc' } })
+  const locale = await getDashboardLocale()
+  const displayLinks = links.map(l => {
+    const loc = localize(l, locale, ['title', 'description'])
+    return { ...l, title: loc.title, description: loc.description }
+  })
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <p className="text-sm text-slate-500 dark:text-slate-400">{links.length} link{links.length !== 1 ? 's' : ''} total</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400">{displayLinks.length} link{displayLinks.length !== 1 ? 's' : ''} total</p>
         <Link href="/dashboard/social-links/new" className="inline-flex items-center gap-2 rounded-lg bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90 transition">
           <Plus size={16} />
           Add Link
         </Link>
       </div>
 
-      {links.length === 0 ? (
+      {displayLinks.length === 0 ? (
         <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-12 text-center">
           <Link2 size={40} className="mx-auto text-slate-300 mb-3" />
           <p className="text-slate-500 dark:text-slate-400 mb-4">No social links yet</p>
@@ -43,7 +49,7 @@ export default async function SocialLinksPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-              {links.map((link) => (
+              {displayLinks.map((link) => (
                 <tr key={link.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
                   <td className="px-5 py-3.5 font-medium text-slate-900 dark:text-white capitalize">{link.platform}</td>
                   <td className="px-5 py-3.5 text-slate-500 dark:text-slate-400">{link.title}</td>

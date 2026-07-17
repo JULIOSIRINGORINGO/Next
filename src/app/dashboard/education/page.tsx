@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 import { Plus, Edit, Trash2, GraduationCap } from 'lucide-react'
 import { deleteEducation } from '@/actions/educations'
+import { getDashboardLocale, localize } from '@/lib/dashboard-locale'
 
 async function deleteEduAction(formData: FormData) {
   'use server'
@@ -10,20 +11,25 @@ async function deleteEduAction(formData: FormData) {
 
 export default async function EducationPage() {
   const educations = await prisma.education.findMany({ orderBy: { order: 'asc' } })
+  const locale = await getDashboardLocale()
+  const displayEducations = educations.map(e => {
+    const l = localize(e, locale, ['institution', 'degree', 'fieldOfStudy', 'description'])
+    return { ...e, institution: l.institution, degree: l.degree, fieldOfStudy: l.fieldOfStudy, description: l.description }
+  })
 
   const formatDate = (d: Date | null) => d ? new Date(d).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : '-'
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <p className="text-sm text-slate-500 dark:text-slate-400">{educations.length} record{educations.length !== 1 ? 's' : ''} total</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400">{displayEducations.length} record{displayEducations.length !== 1 ? 's' : ''} total</p>
         <Link href="/dashboard/education/new" className="inline-flex items-center gap-2 rounded-lg bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90 transition">
           <Plus size={16} />
           Add Education
         </Link>
       </div>
 
-      {educations.length === 0 ? (
+      {displayEducations.length === 0 ? (
         <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-12 text-center">
           <GraduationCap size={40} className="mx-auto text-slate-300 mb-3" />
           <p className="text-slate-500 dark:text-slate-400 mb-4">No education entries yet</p>
@@ -45,7 +51,7 @@ export default async function EducationPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-              {educations.map((edu) => (
+              {displayEducations.map((edu) => (
                 <tr key={edu.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
                   <td className="px-5 py-3.5">
                     <div className="font-medium text-slate-900 dark:text-white">{edu.institution}</div>
