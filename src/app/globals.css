@@ -19,6 +19,10 @@
     filter: invert(1);
   }
 
+  .dark img[src="/icon.svg"] {
+    filter: invert(1) !important;
+  }
+
   @supports not (color: color-mix(in srgb, red, blue)) {
     :root {
       --accent-dark: #00a87d;

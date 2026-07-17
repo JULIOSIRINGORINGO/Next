@@ -78,7 +78,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                             <img
                                 src="/icon.svg"
                                 alt="Logo"
-                                className="w-full h-full object-contain dark:invert"
+                                className="w-full h-full object-contain"
                             />
                         </div>
 
