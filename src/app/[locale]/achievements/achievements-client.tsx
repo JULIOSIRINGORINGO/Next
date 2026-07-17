@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Award, Calendar, ShieldCheck } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import TranslatedText from '@/components/TranslatedText';
 import AchievementDetailModal from '@/components/AchievementDetailModal';
 
 interface Achievement {
@@ -59,11 +58,9 @@ export default function AchievementsClient({ achievements, profile }: Achievemen
                                 onClick={() => setSelected(item)}
                             >
                                 <div className="absolute top-4 right-4 z-10">
-                                    <TranslatedText
-                                        text={item.category}
-                                        as="span"
-                                        className="px-3 py-1 rounded-full bg-accent backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest inline-block"
-                                    />
+                                    <span className="px-3 py-1 rounded-full bg-accent backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest inline-block">
+                                        {item.category}
+                                    </span>
                                 </div>
 
                                 <div className="relative h-36 md:h-44 overflow-hidden bg-white/30 dark:bg-black/20 border-b border-slate-200 dark:border-white/10 group-hover:bg-white/40 dark:group-hover:bg-black/30 backdrop-blur-sm transition-colors">
@@ -83,15 +80,15 @@ export default function AchievementsClient({ achievements, profile }: Achievemen
 
                                 <div className="p-4 md:p-5 space-y-3">
                                     <div className="space-y-1">
-                                        <TranslatedText text={item.title} as="h3" className="font-bold text-base md:text-lg group-hover:text-accent transition-colors line-clamp-1" />
+                                        <h3 className="font-bold text-base md:text-lg group-hover:text-accent transition-colors line-clamp-1">{item.title}</h3>
                                         {item.issuer && (
                                             <p className="text-accent font-bold text-xs flex items-center gap-1.5">
-                                                <ShieldCheck className="w-3.5 h-3.5" /> <TranslatedText text={item.issuer} />
+                                                <ShieldCheck className="w-3.5 h-3.5" /> <span>{item.issuer}</span>
                                             </p>
                                         )}
                                     </div>
 
-                                    <TranslatedText text={item.description} as="p" className="text-black dark:text-white text-xs font-bold leading-relaxed line-clamp-2" />
+                                    <p className="text-black dark:text-white text-xs font-bold leading-relaxed line-clamp-2">{item.description}</p>
 
                                     <div className="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-white/10">
                                         <div className="flex items-center gap-2 text-[10px] font-bold text-black dark:text-white">

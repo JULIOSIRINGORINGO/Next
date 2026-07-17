@@ -64,14 +64,19 @@ model Profile {
   id            String   @id @default(cuid())
   userId        String   @unique @map("user_id")
   fullName      String   @map("full_name")
+  fullNameEn    String?  @map("full_name_en")
   headline      String?
+  headlineEn    String?
   bioHome       String?  @db.Text @map("bio_home")
+  bioHomeEn     String?  @db.Text @map("bio_home_en")
   bioAbout      String?  @db.Text @map("bio_about")
+  bioAboutEn    String?  @db.Text @map("bio_about_en")
   avatarUrl     String?  @map("avatar_url")
   accentColor   String   @default("#3B82F6") @map("accent_color")
   email         String?
   phone         String?
   location      String?
+  locationEn    String?
   website       String?
   githubUrl     String?  @map("github_url")
   linkedinUrl   String?  @map("linkedin_url")
@@ -86,7 +91,9 @@ model Profile {
 model Project {
   id          String   @id @default(cuid())
   title       String
+  titleEn     String?
   description String   @db.Text
+  descriptionEn String? @db.Text
   imageUrl    String?  @map("image_url")
   liveUrl     String?  @map("live_url")
   githubUrl   String?  @map("github_url")
@@ -149,18 +156,24 @@ model Skill {
 model WorkExperience {
   id               String   @id @default(cuid())
   company          String
+  companyEn        String?
   companyLogoUrl   String?  @map("company_logo_url")
   position         String
+  positionEn       String?
   location         String?
   startDate        DateTime @map("start_date")
   endDate          DateTime? @map("end_date")
   current          Boolean  @default(false)
   description      String   @db.Text
+  descriptionEn    String?  @db.Text
   employmentType   String?  @map("employment_type")
   workType         String?  @map("work_type")
   responsibilities Json
+  responsibilitiesEn Json?  @map("responsibilities_en")
   whatILearned     Json?    @map("what_i_learned")
+  whatILearnedEn   Json?    @map("what_i_learned_en")
   impact           Json?
+  impactEn         Json?    @map("impact_en")
   order            Int      @default(0)
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")
@@ -171,15 +184,19 @@ model WorkExperience {
 model Education {
   id                  String   @id @default(cuid())
   institution         String
+  institutionEn       String?
   institutionLogoUrl  String?  @map("institution_logo_url")
   degree              String
+  degreeEn            String?
   fieldOfStudy        String?  @map("field_of_study")
+  fieldOfStudyEn      String?
   location            String?
   gpa                 String?
   startDate           DateTime @map("start_date")
   endDate             DateTime? @map("end_date")
   current             Boolean  @default(false)
   description         String?  @db.Text
+  descriptionEn       String?  @db.Text
   order               Int      @default(0)
   createdAt           DateTime @default(now()) @map("created_at")
   updatedAt           DateTime @updatedAt @map("updated_at")
@@ -191,7 +208,9 @@ model SocialLink {
   id        String   @id @default(cuid())
   platform  String
   title     String
+  titleEn   String?
   description String?
+  descriptionEn String?
   url       String
   isFeatured Boolean   @default(false) @map("is_featured")
   order     Int       @default(0)

@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, Star, Layout } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import TranslatedText from '@/components/TranslatedText';
 import { getSkillIconData, loadIcon } from '@/utils/skillIconMap';
 import { optimizeCloudinaryUrl } from '@/utils/cloudinary';
 import type { IconType } from 'react-icons';
@@ -37,7 +36,7 @@ function TechBadge({ tech }: { tech: string }) {
                     <div className="w-6 h-6 bg-black/10 dark:bg-white/10 rounded animate-pulse" />
                 )}
             </div>
-            <TranslatedText text={tech} className="text-[9px] font-bold uppercase tracking-wider text-black dark:text-white text-center max-w-[48px] truncate" />
+            <span className="text-[9px] font-bold uppercase tracking-wider text-black dark:text-white text-center max-w-[48px] truncate">{tech}</span>
         </div>
     );
 }
@@ -113,8 +112,8 @@ export default function ProjectsClient({ projects, profile }: ProjectsClientProp
                             <div className="p-5 md:p-7 flex-1 flex flex-col justify-between">
                                 <div className="space-y-4">
                                     <div className="space-y-2">
-                                        <TranslatedText text={project.title} as="h3" className="text-xl md:text-2xl font-bold group-hover:text-accent transition-colors line-clamp-1" />
-                                        <TranslatedText text={project.description} as="p" className="text-black dark:text-white font-bold text-xs md:text-sm leading-relaxed line-clamp-3" />
+                                        <h3 className="text-xl md:text-2xl font-bold group-hover:text-accent transition-colors line-clamp-1">{project.title}</h3>
+                                        <p className="text-black dark:text-white font-bold text-xs md:text-sm leading-relaxed line-clamp-3">{project.description}</p>
                                     </div>
 
                                     <div className="flex flex-wrap gap-3 pt-2">

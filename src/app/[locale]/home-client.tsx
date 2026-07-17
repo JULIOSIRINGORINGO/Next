@@ -3,7 +3,6 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import SkillIcon from '@/components/SkillIcon';
-import TranslatedText from '@/components/TranslatedText';
 import { useTranslations } from 'next-intl';
 
 interface Profile {
@@ -83,23 +82,21 @@ export default function HomeClient({ profile, skills }: HomeClientProps) {
                         {profile?.location && (
                             <div className="flex items-center gap-1.5 italic">
                                 <span>•</span>
-                                <TranslatedText text={profile.location} className="not-italic" />
+                                <span className="not-italic">{profile.location}</span>
                             </div>
                         )}
                         {profile?.work_status && (
                             <div className="flex items-center gap-1.5 italic">
                                 <span>•</span>
-                                <TranslatedText text={profile.work_status} className="not-italic" />
+                                <span className="not-italic">{profile.work_status}</span>
                             </div>
                         )}
                     </div>
                 </div>
 
-                <TranslatedText
-                    text={profile?.bio_home || '...'}
-                    as="p"
-                    className="text-base md:text-xl text-black dark:text-white max-w-2xl leading-relaxed whitespace-pre-wrap font-bold shadow-none text-justify"
-                />
+                <p className="text-base md:text-xl text-black dark:text-white max-w-2xl leading-relaxed whitespace-pre-wrap font-bold shadow-none text-justify">
+                    {profile?.bio_home || '...'}
+                </p>
             </motion.div>
 
             <hr className="border-light-border dark:border-dark-border opacity-50" />

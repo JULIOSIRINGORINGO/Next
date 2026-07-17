@@ -16,10 +16,14 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: AchievementDetailPageProps): Promise<Metadata> {
   try {
-    const { id } = await params
-    const achievement = await prisma.achievement.findUnique({ where: { id } }).catch(() => null)
+    const { id, locale } = await params
+    const achievement = await prisma.achievement.findUnique({
+      where: { id },
+      include: { translations: { where: { locale } } },
+    }).catch(() => null)
     if (!achievement) return { title: 'Achievement Not Found' }
-    return { title: achievement.title, description: achievement.description }
+    const t = achievement.translations[0]
+    return { title: t?.title || achievement.title, description: t?.description || achievement.description }
   } catch {
     return { title: 'Achievement' }
   }
@@ -36,6 +40,11 @@ export default async function AchievementDetailPage({ params }: AchievementDetai
   const common = messages.common
 
   if (!achievement) notFound()
+
+  const t = achievement.translations[0]
+  const title = t?.title || achievement.title
+  const description = t?.description || achievement.description
+  const issuer = t?.issuer || achievement.issuer
 
   const iconMap: Record<string, any> = {
     certification: BadgeCheck,
@@ -64,23 +73,23 @@ export default async function AchievementDetailPage({ params }: AchievementDetai
                   ⭐ {common.featured}
                 </span>
               )}
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">{achievement.title}</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">{title}</h1>
               <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground mb-4 flex-wrap">
                 <span className="flex items-center gap-1">
                   <Calendar className="h-4 w-4" />
                   {new Date(achievement.date).toLocaleDateString(locale, { year: 'numeric', month: 'long' })}
                 </span>
-                {achievement.issuer && (
+                {issuer && (
                   <span className="flex items-center gap-1">
                     <Award className="h-4 w-4" />
-                    {achievement.issuer}
+                    {issuer}
                   </span>
                 )}
               </div>
             </header>
 
             <div className="prose prose-muted dark:prose-invert max-w-none">
-              <p className="text-lg leading-relaxed">{achievement.description}</p>
+              <p className="text-lg leading-relaxed">{description}</p>
             </div>
 
             {achievement.credentialUrl && (

@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Briefcase, GraduationCap, ChevronDown, Building, GraduationCap as GraduationIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import TranslatedText from '@/components/TranslatedText';
 import { optimizeCloudinaryUrl } from '@/utils/cloudinary';
 
 interface Experience {
@@ -71,11 +70,9 @@ export default function AboutClient({ profile, experiences, educations }: AboutC
             <section className="space-y-6 relative">
                 <h2 className="text-3xl font-extrabold tracking-tight">{t('about.title')}</h2>
                 <div className="border-b border-slate-200 dark:border-white/10 pb-8 space-y-6">
-                    <TranslatedText
-                        text={profile?.bio_about || profile?.bio_home || '...'}
-                        as="p"
-                        className="text-base md:text-xl text-black dark:text-white leading-relaxed whitespace-pre-wrap font-bold text-justify"
-                    />
+                    <p className="text-base md:text-xl text-black dark:text-white leading-relaxed whitespace-pre-wrap font-bold text-justify">
+                      {profile?.bio_about || profile?.bio_home || '...'}
+                    </p>
                     <div className="pt-4">
                         <p className="text-black dark:text-white font-bold italic">{t('about.warm_regards')}</p>
                         <p
@@ -118,8 +115,8 @@ export default function AboutClient({ profile, experiences, educations }: AboutC
                                     )}
                                 </div>
                                 <div className="flex-1 space-y-1">
-                                    <TranslatedText text={exp.position} as="h3" className="font-bold text-base md:text-lg leading-tight group-hover:text-accent transition-colors" />
-                                    <TranslatedText text={exp.company_name} as="p" className="text-accent font-bold text-xs md:text-sm tracking-wide" />
+                                    <h3 className="font-bold text-base md:text-lg leading-tight group-hover:text-accent transition-colors">{exp.position}</h3>
+                                    <p className="text-accent font-bold text-xs md:text-sm tracking-wide">{exp.company_name}</p>
                                     <div className="flex flex-wrap gap-2 pt-1.5 font-bold">
                                         <span className="px-2.5 py-1 rounded-lg bg-black/5 dark:bg-white/5 text-[10px] font-bold uppercase tracking-wider text-black dark:text-white">
                                             {new Date(exp.start_date).toLocaleDateString(undefined, { year: 'numeric', month: 'short' })} - {exp.is_current ? t('about.present') : new Date(exp.end_date!).toLocaleDateString(undefined, { year: 'numeric', month: 'short' })}
@@ -128,7 +125,7 @@ export default function AboutClient({ profile, experiences, educations }: AboutC
                                             {getDuration(exp.start_date, exp.end_date, exp.is_current)}
                                         </span>
                                         <span className="px-2.5 py-1 rounded-lg bg-accent/10 text-accent text-[10px] uppercase tracking-wider">
-                                            <TranslatedText text={exp.employment_type} /> • <TranslatedText text={exp.work_type} />
+                                            {exp.employment_type} • {exp.work_type}
                                         </span>
                                     </div>
                                 </div>
@@ -177,7 +174,7 @@ export default function AboutClient({ profile, experiences, educations }: AboutC
                                                             className="flex gap-3 text-sm font-medium leading-relaxed"
                                                         >
                                                             <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 flex-shrink-0" />
-                                                            <TranslatedText text={point} className="text-black dark:text-white font-bold shadow-none text-left" />
+                                                            <span className="text-black dark:text-white font-bold shadow-none text-left">{point}</span>
                                                         </motion.li>
                                                     ))}
                                                 </ul>
@@ -217,9 +214,9 @@ export default function AboutClient({ profile, experiences, educations }: AboutC
                                 )}
                             </div>
                             <div className="flex-1 space-y-1">
-                                <TranslatedText text={edu.institution_name} as="h3" className="font-bold text-base md:text-lg leading-tight group-hover:text-accent transition-colors shadow-none" />
+                                <h3 className="font-bold text-base md:text-lg leading-tight group-hover:text-accent transition-colors shadow-none">{edu.institution_name}</h3>
                                 <p className="text-xs md:text-sm font-bold text-black dark:text-white shadow-none">
-                                    <TranslatedText text={edu.degree} /> • <TranslatedText text={edu.field_of_study} />
+                                    {edu.degree} • {edu.field_of_study}
                                 </p>
                                 {edu.gpa && <p className="text-[11px] font-extrabold text-accent uppercase tracking-wider shadow-none">GPA: {edu.gpa}</p>}
                                 <div className="flex flex-wrap gap-2 pt-2">

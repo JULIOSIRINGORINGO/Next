@@ -1,9 +1,11 @@
 import { prisma } from '@/lib/prisma'
+import { localize } from '@/lib/localize'
 import HomeClient from './home-client'
 
 export const dynamic = 'force-dynamic'
 
-export default async function HomePage() {
+export default async function HomePage({ params }: { params: { locale: string } }) {
+  const { locale } = params
   let profile: any = null
   let skills: any[] = []
 
@@ -14,12 +16,13 @@ export default async function HomePage() {
     ])
 
     if (rawProfile) {
+      const p = localize(rawProfile, locale, ['fullName', 'headline', 'bioHome', 'location'])
       profile = {
-        name: rawProfile.fullName,
-        location: rawProfile.location,
-        work_status: rawProfile.headline,
-        bio_home: rawProfile.bioHome,
-        avatar_url: rawProfile.avatarUrl,
+        name: p.fullName,
+        location: p.location,
+        work_status: p.headline,
+        bio_home: p.bioHome,
+        avatar_url: p.avatarUrl,
       }
     }
 

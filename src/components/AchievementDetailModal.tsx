@@ -5,7 +5,6 @@ import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Calendar, ShieldCheck, FileText, ChevronRight, Download } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import TranslatedText from '@/components/TranslatedText'
 
 interface Achievement {
   id: string
@@ -98,23 +97,19 @@ export default function AchievementDetailModal({ isOpen, onClose, achievement }:
             <div className="w-full md:w-[35%] p-4 overflow-y-auto bg-white dark:bg-[#0a0a0a] md:rounded-r-3xl text-black dark:text-white flex flex-col">
               <div className="flex-1">
                 <div className="mb-1.5">
-                  <TranslatedText
-                    text={achievement.category}
-                    as="div"
-                    className="inline-flex px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-white bg-[var(--accent)] rounded-full"
-                  />
+                  <div className="inline-flex px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-white bg-[var(--accent)] rounded-full">
+                    {achievement.category}
+                  </div>
                 </div>
 
-                <TranslatedText
-                  text={achievement.title}
-                  as="h2"
-                  className="text-sm font-bold leading-snug mb-1"
-                />
+                <h2 className="text-sm font-bold leading-snug mb-1">
+                  {achievement.title}
+                </h2>
 
                 {achievement.issuer && (
                   <div className="text-xs mb-2.5 text-black dark:text-white flex items-center gap-2">
                     <ShieldCheck className="w-4 h-4 text-[var(--accent)]" />
-                    <TranslatedText text={achievement.issuer} as="span" className="font-bold" />
+                    <span className="font-bold">{achievement.issuer}</span>
                   </div>
                 )}
 
@@ -137,11 +132,9 @@ export default function AchievementDetailModal({ isOpen, onClose, achievement }:
                       <div className="text-[9px] mb-px tracking-wider text-black dark:text-white font-bold uppercase">
                         {t('achievements.type_label')}
                       </div>
-                      <TranslatedText
-                        text={achievement.type}
-                        as="p"
-                        className="text-xs font-bold text-black dark:text-white"
-                      />
+                      <p className="text-xs font-bold text-black dark:text-white">
+                        {achievement.type}
+                      </p>
                     </div>
                   )}
 
@@ -162,11 +155,9 @@ export default function AchievementDetailModal({ isOpen, onClose, achievement }:
                       <div className="text-[9px] mb-px tracking-wider text-black dark:text-white font-bold uppercase">
                         {t('achievements.description_label')}
                       </div>
-                      <TranslatedText
-                        text={achievement.description}
-                        as="p"
-                        className="text-xs text-black dark:text-white leading-relaxed"
-                      />
+                      <p className="text-xs text-black dark:text-white leading-relaxed">
+                        {achievement.description}
+                      </p>
                     </div>
                   )}
                 </div>

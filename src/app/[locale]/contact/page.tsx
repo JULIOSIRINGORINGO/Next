@@ -1,9 +1,11 @@
 import { prisma } from '@/lib/prisma'
+import { localize } from '@/lib/localize'
 import ContactClient from './contact-client'
 
 export const dynamic = 'force-dynamic'
 
-export default async function ContactPage() {
+export default async function ContactPage({ params }: { params: { locale: string } }) {
+  const { locale } = params
   let socialLinks: any[] = []
   let profile: any = null
 
@@ -13,14 +15,17 @@ export default async function ContactPage() {
       prisma.profile.findFirst(),
     ])
 
-    socialLinks = rawLinks.map(l => ({
-      id: l.id,
-      platform: l.platform,
-      title: l.title,
-      description: l.description,
-      url: l.url,
-      is_featured: l.isFeatured,
-    }))
+    socialLinks = rawLinks.map(l => {
+      const t = localize(l, locale, ['title', 'description'])
+      return {
+        id: l.id,
+        platform: l.platform,
+        title: t.title,
+        description: t.description,
+        url: l.url,
+        is_featured: l.isFeatured,
+      }
+    })
 
     if (rawProfile) {
       profile = { name: rawProfile.fullName }

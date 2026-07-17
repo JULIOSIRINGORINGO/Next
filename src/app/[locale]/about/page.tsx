@@ -1,9 +1,11 @@
 import { prisma } from '@/lib/prisma'
+import { localize } from '@/lib/localize'
 import AboutClient from './about-client'
 
 export const dynamic = 'force-dynamic'
 
-export default async function AboutPage() {
+export default async function AboutPage({ params }: { params: { locale: string } }) {
+  const { locale } = params
   let profile: any = null
   let experiences: any[] = []
   let educations: any[] = []
@@ -16,44 +18,51 @@ export default async function AboutPage() {
     ])
 
     if (rawProfile) {
+      const p = localize(rawProfile, locale, ['fullName', 'headline', 'bioHome', 'bioAbout', 'location'])
       profile = {
-        name: rawProfile.fullName,
-        bio_home: rawProfile.bioHome,
-        bio_about: rawProfile.bioAbout,
-        location: rawProfile.location,
-        avatar_url: rawProfile.avatarUrl,
+        name: p.fullName,
+        bio_home: p.bioHome,
+        bio_about: p.bioAbout,
+        location: p.location,
+        avatar_url: p.avatarUrl,
       }
     }
 
-    experiences = rawExps.map(e => ({
-      id: e.id,
-      company_name: e.company,
-      company_logo_url: e.companyLogoUrl,
-      position: e.position,
-      location: e.location,
-      start_date: e.startDate?.toISOString(),
-      end_date: e.endDate?.toISOString() || null,
-      is_current: e.current,
-      employment_type: e.employmentType,
-      work_type: e.workType,
-      responsibilities: e.responsibilities as string[],
-      what_i_learned: e.whatILearned as string[],
-      impact: e.impact as string[],
-    }))
+    experiences = rawExps.map(e => {
+      const l = localize(e, locale, ['company', 'position', 'description', 'responsibilities', 'whatILearned', 'impact'])
+      return {
+        id: e.id,
+        company_name: l.company,
+        company_logo_url: e.companyLogoUrl,
+        position: l.position,
+        location: e.location,
+        start_date: e.startDate?.toISOString(),
+        end_date: e.endDate?.toISOString() || null,
+        is_current: e.current,
+        employment_type: e.employmentType,
+        work_type: e.workType,
+        responsibilities: l.responsibilities as string[],
+        what_i_learned: l.whatILearned as string[],
+        impact: l.impact as string[],
+      }
+    })
 
-    educations = rawEdus.map(e => ({
-      id: e.id,
-      institution_name: e.institution,
-      institution_logo_url: e.institutionLogoUrl,
-      degree: e.degree,
-      field_of_study: e.fieldOfStudy,
-      location: e.location,
-      gpa: e.gpa,
-      start_date: e.startDate?.toISOString(),
-      end_date: e.endDate?.toISOString() || null,
-      is_current: e.current,
-      description: e.description,
-    }))
+    educations = rawEdus.map(e => {
+      const l = localize(e, locale, ['institution', 'degree', 'fieldOfStudy', 'description'])
+      return {
+        id: e.id,
+        institution_name: l.institution,
+        institution_logo_url: e.institutionLogoUrl,
+        degree: l.degree,
+        field_of_study: l.fieldOfStudy,
+        location: e.location,
+        gpa: e.gpa,
+        start_date: e.startDate?.toISOString(),
+        end_date: e.endDate?.toISOString() || null,
+        is_current: e.current,
+        description: l.description,
+      }
+    })
   } catch {}
 
   return <AboutClient profile={profile} experiences={experiences} educations={educations} />

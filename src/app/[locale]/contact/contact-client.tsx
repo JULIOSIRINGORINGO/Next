@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion'
 import { ExternalLink } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import TranslatedText from '@/components/TranslatedText'
 
 interface SocialLink {
   id: number
@@ -130,9 +129,9 @@ function BentoCard({ link, span }: { link: SocialLink; span: 'full' | 'half' }) 
 
       <div className="relative z-10 p-6 md:p-8 h-full flex flex-col justify-between">
         <div className="space-y-2 pr-16 md:pr-20">
-          <TranslatedText text={link.title} as="h3" className="text-xl md:text-2xl font-extrabold text-white leading-tight" />
+          <h3 className="text-xl md:text-2xl font-extrabold text-white leading-tight">{link.title}</h3>
           {link.description && (
-            <TranslatedText text={link.description} as="p" className="text-white font-bold text-sm leading-relaxed line-clamp-2" />
+            <p className="text-white font-bold text-sm leading-relaxed line-clamp-2">{link.description}</p>
           )}
         </div>
         <div className="mt-5">
