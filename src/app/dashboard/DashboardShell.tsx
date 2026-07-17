@@ -164,7 +164,7 @@ export default function DashboardShell({
       >
         {/* Logo */}
         <div className="flex h-16 items-center gap-3 px-5 border-b border-slate-800 shrink-0">
-          <img src="/icon.svg" alt="Logo" className="h-8 w-8 object-contain" />
+          <img src="/icon.svg" alt="Logo" className="h-8 w-8 object-contain dark:invert" />
           <div className="flex-1 min-w-0">
             <span className="text-sm font-semibold text-white">Portfolio</span>
             <span className="block text-[11px] text-slate-400">{t('admin.panel_title')}</span>
