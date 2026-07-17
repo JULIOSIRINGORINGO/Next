@@ -31,6 +31,10 @@ export default auth((req) => {
     return NextResponse.next()
   }
 
+  if (isLoginPage) {
+    return NextResponse.next()
+  }
+
   return intlMiddleware(req as any)
 })
 
