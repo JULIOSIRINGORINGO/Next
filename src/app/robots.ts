@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/dashboard', '/api'],
       },
     ],
-    sitemap: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://your-domain.com'}/sitemap.xml`,
+    sitemap: 'https://juliosiringoringo.space/sitemap.xml',
   }
 }
