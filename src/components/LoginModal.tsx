@@ -73,10 +73,10 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                             <X className="w-4 h-4" />
                         </button>
 
-                        {/* Top Icon (Favicon) */}
+                        {/* Top Icon */}
                         <div className="w-12 h-12 flex items-center justify-center mx-auto mb-6">
                             <img
-                                src="/favicon.ico"
+                                src="/icon.svg"
                                 alt="Logo"
                                 className="w-full h-full object-contain"
                             />
