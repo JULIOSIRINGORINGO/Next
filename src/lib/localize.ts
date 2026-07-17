@@ -1,4 +1,4 @@
-export function localize<T extends Record<string, any>>(obj: T, locale: string, fields: string[]): T {
+export function localize(obj: Record<string, any>, locale: string, fields: string[]): Record<string, any> {
   if (locale === 'en') {
     const result = { ...obj }
     for (const field of fields) {
