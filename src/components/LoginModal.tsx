@@ -48,7 +48,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                 onClose();
                 setEmail('');
                 setPassword('');
-                window.location.href = '/dashboard';
+                window.location.replace('/dashboard');
             }
         } catch {
             toast.error(t('toast.error_auth'));
