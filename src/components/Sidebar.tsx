@@ -161,8 +161,9 @@ const Sidebar: React.FC<SidebarProps> = ({ profile: profileProp }) => {
                     <Link
                         key={item.to}
                         href={item.to}
+                        prefetch={true}
                         onClick={() => setMobileOpen(false)}
-                        className={`flex items-center gap-4 px-4 py-3 rounded-xl text-[15px] font-semibold transition-all duration-300 ${isActive(item.to)
+                        className={`flex items-center gap-4 px-4 py-3 rounded-xl text-[15px] font-semibold transition-all duration-150 ${isActive(item.to)
                             ? 'bg-accent text-white'
                             : 'text-black dark:text-white hover:bg-accent/10 hover:text-accent'
                         }`}
@@ -179,7 +180,7 @@ const Sidebar: React.FC<SidebarProps> = ({ profile: profileProp }) => {
                     <div className="flex items-center justify-between">
                         <button
                             onClick={toggle}
-                            className="p-2.5 rounded-xl hover:bg-black/10 text-black dark:text-white hover:text-accent transition-all duration-300"
+                            className="p-2.5 rounded-xl hover:bg-black/10 text-black dark:text-white hover:text-accent transition-all duration-150"
                             title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
                         >
                             {isDark ? <Moon className="w-6 h-6" /> : <Sun className="w-6 h-6" />}
@@ -202,7 +203,7 @@ const Sidebar: React.FC<SidebarProps> = ({ profile: profileProp }) => {
                         ) : (
                             <button
                                 onClick={() => setShowLogin(true)}
-                                className="p-2.5 rounded-xl hover:bg-black/10 text-black dark:text-white hover:text-accent transition-all duration-300"
+                                className="p-2.5 rounded-xl hover:bg-black/10 text-black dark:text-white hover:text-accent transition-all duration-150"
                                 title="Login"
                             >
                                 <User className="w-6 h-6" />
@@ -223,7 +224,7 @@ const Sidebar: React.FC<SidebarProps> = ({ profile: profileProp }) => {
             {/* Mobile Header */}
             <div className="lg:hidden fixed top-0 left-0 right-0 z-40 h-16 bg-light-sidebar dark:bg-dark-sidebar border-b border-slate-200 dark:border-white/10 flex items-center justify-between px-6">
                 <h1 className="font-bold text-base tracking-tight">{profile?.name || 'Portfolio'}</h1>
-                <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 rounded-xl hover:bg-accent/10 text-accent">
+                <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 rounded-xl hover:bg-accent/10 text-accent transition-all duration-150">
                     {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                 </button>
             </div>

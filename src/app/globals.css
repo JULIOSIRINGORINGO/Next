@@ -26,14 +26,6 @@
     }
   }
 
-  body,
-  aside,
-  nav,
-  main,
-  header,
-  footer,
-  a,
-  button,
   .glass-card,
   .glass-modal,
   .transition-colors-custom {
@@ -307,19 +299,4 @@
   height: 2px;
   background-color: var(--accent);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes page-enter {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.page-enter {
-  animation: page-enter 0.25s ease-out both;
 }
