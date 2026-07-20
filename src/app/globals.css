@@ -34,9 +34,6 @@
   footer,
   a,
   button,
-  input,
-  textarea,
-  select,
   .glass-card,
   .glass-modal,
   .transition-colors-custom {
@@ -166,28 +163,12 @@
   }
 }
 
-/* GLOBAL ZERO SHADOW & TEXT SOLIDITY OVERRIDE */
-canvas,
-div,
-button,
-input,
-textarea,
-select,
-span,
-a,
-img,
-section,
-article,
-nav,
-aside,
-header,
-footer,
+/* Remove shadow/text-shadow from elements that use Tailwind shadow classes */
 [class*="shadow-"],
 [class*="drop-shadow-"],
 [class*="text-shadow-"] {
   box-shadow: none !important;
   text-shadow: none !important;
-  filter: drop-shadow(0 0 0 transparent) !important;
 }
 
 /* Ensure placeholder visibility */
