@@ -2,7 +2,7 @@ import { prisma } from '@/lib/prisma'
 import { localize } from '@/lib/localize'
 import AboutClient from './about-client'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 export default async function AboutPage({ params }: { params: { locale: string } }) {
   const { locale } = params

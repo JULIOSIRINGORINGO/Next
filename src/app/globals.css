@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,16 +12,8 @@
     --accent-border: color-mix(in srgb, var(--accent) 60%, transparent);
   }
 
-  .icon-dark {
-    filter: invert(1);
-  }
-
   .dark img[src="/icon.svg"] {
     filter: invert(1) !important;
-  }
-
-  .sidebar-logo {
-    filter: brightness(0) invert(1) !important;
   }
 
   @supports not (color: color-mix(in srgb, red, blue)) {
@@ -37,7 +26,20 @@
     }
   }
 
-  * {
+  body,
+  aside,
+  nav,
+  main,
+  header,
+  footer,
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  .glass-card,
+  .glass-modal,
+  .transition-colors-custom {
     @apply transition-colors duration-300;
   }
 
@@ -45,16 +47,6 @@
     @apply font-sans antialiased;
     @apply bg-light-bg text-black;
     @apply dark:bg-dark-bg dark:text-white;
-  }
-
-  html, body {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    overflow-x: hidden;
-  }
-
-  html::-webkit-scrollbar {
-    display: none;
   }
 
   * {
@@ -204,18 +196,149 @@ footer,
   opacity: 1 !important;
 }
 
-/* Modal animation overrides */
-.animate-modal-in {
-  animation: modal-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes modal-in {
+@keyframes fade-in-up {
   from {
     opacity: 0;
-    transform: scale(0.95);
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out both;
+}
+
+@keyframes modal-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modal-content-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toast-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+}
+
+@keyframes list-item-in {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
   }
   to {
     opacity: 1;
     transform: scale(1);
   }
+}
+
+.animate-modal-overlay-in {
+  animation: modal-overlay-in 0.2s ease-out both;
+}
+
+.animate-modal-content-in {
+  animation: modal-content-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-toast-in {
+  animation: toast-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-toast-out {
+  animation: toast-out 0.2s ease-in both;
+}
+
+.animate-list-item {
+  animation: list-item-in 0.3s ease-out both;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.grid-expand {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.grid-expand-open {
+  grid-template-rows: 1fr;
+}
+
+.grid-expand > div {
+  overflow: hidden;
+}
+
+.tab-underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--accent);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter {
+  animation: page-enter 0.25s ease-out both;
 }

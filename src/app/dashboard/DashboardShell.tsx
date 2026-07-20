@@ -28,6 +28,7 @@ import {
   Tag,
 } from 'lucide-react'
 import { optimizeCloudinaryUrl } from '@/utils/cloudinary'
+import { getLatestVersion } from '@/lib/changelog'
 import en from '@/messages/en.json'
 import id from '@/messages/id.json'
 
@@ -94,6 +95,8 @@ export default function DashboardShell({
   const { isDark, toggle } = useTheme()
   const { data: session, status } = useSession()
   const router = useRouter()
+
+  const latestVersion = getLatestVersion()
 
   const [avatarUrl, setAvatarUrl] = useState<string | null>(
     profileAvatar ? optimizeCloudinaryUrl(profileAvatar) : null
@@ -217,9 +220,9 @@ export default function DashboardShell({
       >
         {/* Logo */}
         <div className="flex h-16 items-center gap-3 px-5 border-b border-slate-800 shrink-0">
-          <img src="/icon.svg" alt="Logo" className="h-8 w-8 object-contain sidebar-logo" />
+          <img src="/icon.svg" alt="Logo" className="h-8 w-8 object-contain brightness-0 invert" />
           <div className="flex-1 min-w-0">
-            <span className="text-sm font-semibold text-white">Portfolio <span className="text-[10px] text-slate-500 font-normal">v0.5</span></span>
+            <span className="text-sm font-semibold text-white">Portfolio <span className="text-[10px] text-slate-500 font-normal">v{latestVersion?.version || '1.0.0'}</span></span>
             <span className="block text-[11px] text-slate-400">{t('admin.panel_title')}</span>
           </div>
           <button

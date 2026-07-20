@@ -1,11 +1,21 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/react'
-import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Inter, Grand_Hotel } from 'next/font/google'
+import dynamic from 'next/dynamic'
 import { prisma } from '@/lib/prisma'
 import '@/app/globals.css'
 
+const Analytics = dynamic(
+  () => import('@vercel/analytics/react').then((mod) => mod.Analytics),
+  { ssr: false }
+)
+
+const SpeedInsights = dynamic(
+  () => import('@vercel/speed-insights/next').then((mod) => mod.SpeedInsights),
+  { ssr: false }
+)
+
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+const grandHotel = Grand_Hotel({ weight: '400', subsets: ['latin'], variable: '--font-grand-hotel' })
 
 async function getProfileName(): Promise<string> {
   try {
@@ -74,7 +84,7 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${grandHotel.variable}`}>
       <head>
         <script
           dangerouslySetInnerHTML={{

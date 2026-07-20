@@ -26,15 +26,3 @@ export async function uploadImage(formData: FormData) {
   return { url }
 }
 
-export async function deleteImage(formData: FormData) {
-  const session = await auth()
-  if (!session) throw new Error('Unauthorized')
-
-  const url = formData.get('url') as string
-  if (!url) throw new Error('No URL provided')
-
-  // Note: Vercel Blob delete requires token with delete permission
-  // For now just return success - implement actual delete when needed
-  revalidatePath('/dashboard')
-  return { success: true }
-}

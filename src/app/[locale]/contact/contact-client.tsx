@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { ExternalLink } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
@@ -65,23 +64,23 @@ export default function ContactClient({ socialLinks, profile }: ContactClientPro
 
   return (
     <div className="py-12 md:py-16 space-y-8">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
+      <div className="space-y-4 animate-fade-in-up">
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">
           {t('contact.title')}
         </h1>
         <div className="h-px bg-slate-200 dark:bg-white/10" />
-      </motion.div>
+      </div>
 
-      <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}>
+      <div className="animate-fade-in-up" style={{ animationDelay: '50ms', animationFillMode: 'both' }}>
         <p className="text-base font-bold text-black dark:text-white">
           {t('contact.find_me')}
         </p>
-      </motion.div>
+      </div>
 
       {featuredLinks.map((link, i) => (
-        <motion.div key={link.id} initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}>
+        <div key={link.id} className="animate-fade-in-up" style={{ animationDelay: `${(i + 1) * 80}ms`, animationFillMode: 'both' }}>
           <BentoCard link={link} span="full" />
-        </motion.div>
+        </div>
       ))}
 
       {otherLinks.length > 0 && (
@@ -89,18 +88,18 @@ export default function ContactClient({ socialLinks, profile }: ContactClientPro
           {otherLinks.map((link, i) => {
             const isLastOdd = i === otherLinks.length - 1 && otherLinks.length % 2 === 1
             return (
-              <motion.div key={link.id} initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: (featuredLinks.length + i) * 0.08 }} className={isLastOdd ? 'md:col-span-2' : ''}>
+              <div key={link.id} className={`animate-fade-in-up ${isLastOdd ? 'md:col-span-2' : ''}`} style={{ animationDelay: `${(featuredLinks.length + i + 1) * 80}ms`, animationFillMode: 'both' }}>
                 <BentoCard link={link} span={isLastOdd ? 'full' : 'half'} />
-              </motion.div>
+              </div>
             )
           })}
         </div>
       )}
 
       {socialLinks.length === 0 && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-16">
+        <div className="text-center py-16 animate-fade-in">
           <p className="text-black dark:text-white font-bold">{t('common.no_data')}</p>
-        </motion.div>
+        </div>
       )}
     </div>
   )

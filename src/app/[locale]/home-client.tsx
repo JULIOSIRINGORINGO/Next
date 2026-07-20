@@ -1,7 +1,6 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
 import SkillIcon from '@/components/SkillIcon';
 import { useTranslations } from 'next-intl';
 
@@ -27,23 +26,20 @@ interface HomeClientProps {
 
 const CATEGORY_ORDER = ['Languages', 'Frontend', 'Backend', 'Mobile', 'Database', 'Tools & DevOps', 'Cloud', 'AI'];
 
-function SkillItem({ skill }: { skill: Skill }) {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, margin: '0px 0px -30px 0px' });
+function SkillItem({ skill, index }: { skill: Skill; index: number }) {
+    const ref = useRef<HTMLDivElement>(null);
 
     return (
-        <motion.div
+        <div
             ref={ref}
-            style={{ willChange: 'transform, opacity' }}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.2 }}
+            className="animate-fade-in-up"
+            style={{ animationDelay: `${Math.min(index * 30, 600)}ms`, animationFillMode: 'both' }}
         >
             <SkillIcon
                 name={skill.name}
                 iconSlug={skill.iconName || ''}
             />
-        </motion.div>
+        </div>
     );
 }
 
@@ -64,16 +60,11 @@ export default function HomeClient({ profile, skills }: HomeClientProps) {
 
     return (
         <div className="py-12 md:py-20 lg:py-24 space-y-16">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="space-y-6"
-            >
+            <div className="space-y-6 animate-fade-in-up">
                 <div className="space-y-1">
                     <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
                         {t('home.greeting')}{' '}
-                        <span className="text-accent font-normal" style={{ fontFamily: '"Grand Hotel", cursive' }}>
+                        <span className="text-accent font-normal" style={{ fontFamily: 'var(--font-grand-hotel), cursive' }}>
                             {profile?.name || '...'}
                         </span>
                     </h1>
@@ -97,17 +88,12 @@ export default function HomeClient({ profile, skills }: HomeClientProps) {
                 <p className="text-base md:text-xl text-black dark:text-white max-w-2xl leading-relaxed whitespace-pre-wrap font-bold shadow-none text-justify">
                     {profile?.bio_home || '...'}
                 </p>
-            </motion.div>
+            </div>
 
             <hr className="border-light-border dark:border-dark-border opacity-50" />
 
             {grouped.length > 0 && (
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                    className="space-y-12"
-                >
+                <div className="space-y-12 animate-fade-in-up" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
                     <div>
                         <h2 className="text-2xl font-extrabold flex items-center gap-3">
                             <span className="text-accent">{'</>'}</span> {t('home.skills_title')}
@@ -124,14 +110,14 @@ export default function HomeClient({ profile, skills }: HomeClientProps) {
                                     {t(`home.categories.${group.category}`)}
                                 </h3>
                                 <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-x-4 gap-y-6">
-                                    {group.items.map(skill => (
-                                        <SkillItem key={skill.id} skill={skill} />
+                                    {group.items.map((skill, idx) => (
+                                        <SkillItem key={skill.id} skill={skill} index={idx} />
                                     ))}
                                 </div>
                             </div>
                         ))}
                     </div>
-                </motion.div>
+                </div>
             )}
         </div>
     );

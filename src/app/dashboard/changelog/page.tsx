@@ -2,19 +2,19 @@ import { changelog, type ChangelogEntry, type ChangelogStatus } from '@/lib/chan
 import { getDashboardLocale } from '@/lib/dashboard-locale'
 import { Tag, Sparkles, Bug, Zap, AlertTriangle, Clock, CheckCircle2, Calendar } from 'lucide-react'
 
-function StatusBadge({ status }: { status: ChangelogStatus }) {
+function StatusBadge({ status, isEn }: { status: ChangelogStatus; isEn: boolean }) {
   if (status === 'released') {
     return (
       <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-400">
         <CheckCircle2 size={13} />
-        Released
+        {isEn ? 'Released' : 'Dirilis'}
       </span>
     )
   }
   return (
     <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 dark:bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-700 dark:text-blue-400">
       <Clock size={13} />
-      Planned
+      {isEn ? 'Planned' : 'Direncanakan'}
     </span>
   )
 }
@@ -52,21 +52,25 @@ export default async function ChangelogPage() {
   const locale = await getDashboardLocale()
   const isEn = locale === 'en'
 
-  const released = changelog.filter((e) => e.status === 'released')
-  const planned = changelog.filter((e) => e.status === 'planned')
+  const visible = changelog.filter((e) => !e.hidden)
+  const released = visible.filter((e) => e.status === 'released')
+  const planned = visible.filter((e) => e.status === 'planned')
 
   return (
     <div className="space-y-8">
       <div>
         <p className="text-sm text-slate-500 dark:text-slate-400">
-          {changelog.length} release{changelog.length !== 1 ? 's' : ''} &middot; {released.length} released, {planned.length} planned
+          {isEn
+            ? `${visible.length} release${visible.length !== 1 ? 's' : ''} \u00B7 ${released.length} released, ${planned.length} planned`
+            : `${visible.length} rilis \u00B7 ${released.length} dirilis, ${planned.length} direncanakan`
+          }
         </p>
       </div>
 
-      {changelog.length === 0 ? (
+      {visible.length === 0 ? (
         <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-12 text-center">
           <Tag size={40} className="mx-auto text-slate-300 mb-3" />
-          <p className="text-slate-500 dark:text-slate-400">No changelog entries yet</p>
+          <p className="text-slate-500 dark:text-slate-400">{isEn ? 'No changelog entries yet' : 'Belum ada entri changelog'}</p>
         </div>
       ) : (
         <div className="relative">
@@ -74,7 +78,7 @@ export default async function ChangelogPage() {
           <div className="absolute left-[15px] top-0 bottom-0 w-px bg-slate-200 dark:bg-slate-700" />
 
           <div className="space-y-8">
-            {changelog.map((entry) => (
+            {visible.map((entry) => (
               <div key={entry.version} className="relative pl-10">
                 {/* Timeline dot */}
                 <div className={`absolute left-[8px] top-2 h-[15px] w-[15px] rounded-full border-[3px] ${
@@ -86,7 +90,7 @@ export default async function ChangelogPage() {
                 <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden">
                   {/* Header */}
                   <div className="px-5 py-4 border-b border-slate-100 dark:border-slate-800 flex flex-wrap items-center gap-3">
-                    <StatusBadge status={entry.status} />
+                    <StatusBadge status={entry.status} isEn={isEn} />
                     <span className="text-sm font-bold text-slate-900 dark:text-white">
                       v{entry.version}
                     </span>

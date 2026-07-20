@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useMemo, lazy, Suspense } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { FolderOpen, Trophy, Star, GitCommit, GitPullRequest, AlertCircle, Users, Github } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 

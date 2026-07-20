@@ -2,7 +2,6 @@
 
 import { memo } from 'react'
 import { loadIcon } from '@/utils/skillIconMap'
-import type { IconType } from 'react-icons'
 
 function TechIconInner({ name, size = 24, color }: { name: string; size?: number; color?: string }) {
   const Icon = loadIcon(name)

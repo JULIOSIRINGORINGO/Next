@@ -2,7 +2,6 @@
 
 import { useState, useRef } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Briefcase, GraduationCap, ChevronDown, Building, GraduationCap as GraduationIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { optimizeCloudinaryUrl } from '@/utils/cloudinary';
@@ -49,8 +48,6 @@ export default function AboutClient({ profile, experiences, educations }: AboutC
     const [activeTabs, setActiveTabs] = useState<Record<number, 'resp' | 'learn' | 'impact'>>({});
     const nowRef = useRef<Date>(new Date());
 
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-
     const getDuration = (start: string, end: string | null, isCurrent: boolean) => {
         const startDate = new Date(start);
         const endDate = isCurrent ? nowRef.current : (end ? new Date(end) : nowRef.current);
@@ -77,7 +74,7 @@ export default function AboutClient({ profile, experiences, educations }: AboutC
                         <p className="text-black dark:text-white font-bold italic">{t('about.warm_regards')}</p>
                         <p
                             className="text-5xl text-accent mt-1"
-                            style={{ fontFamily: '"Grand Hotel", cursive' }}
+                            style={{ fontFamily: 'var(--font-grand-hotel), cursive' }}
                         >
                             {profile?.name ? profile.name.split(' ')[0].charAt(0).toUpperCase() + profile.name.split(' ')[0].slice(1).toLowerCase() : '...'}
                         </p>
@@ -103,11 +100,10 @@ export default function AboutClient({ profile, experiences, educations }: AboutC
                                 <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl overflow-hidden flex-shrink-0 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 p-2">
                                     {exp.company_logo_url ? (
                                         <Image
-                                            src={optimizeCloudinaryUrl(exp.company_logo_url.startsWith('http') ? exp.company_logo_url : `${API_URL}${exp.company_logo_url}`)}
+                                            src={optimizeCloudinaryUrl(exp.company_logo_url || '')}
                                             alt={exp.company_name}
                                             width={56}
                                             height={56}
-                                            unoptimized
                                             className="w-full h-full object-contain"
                                         />
                                     ) : (
@@ -132,14 +128,9 @@ export default function AboutClient({ profile, experiences, educations }: AboutC
                                 <ChevronDown className={`w-5 h-5 text-black dark:text-white transition-transform duration-300 mt-1 ${expandedExp === exp.id ? 'rotate-180 text-accent' : ''}`} />
                             </div>
 
-                            <AnimatePresence>
-                                {expandedExp === exp.id && (
-                                    <motion.div
-                                        initial={{ height: 0, opacity: 0 }}
-                                        animate={{ height: 'auto', opacity: 1 }}
-                                        exit={{ height: 0, opacity: 0 }}
-                                        className="border-t border-slate-200 dark:border-white/10"
-                                    >
+                            <div className={`grid-expand ${expandedExp === exp.id ? 'grid-expand-open' : ''}`}>
+                                <div>
+                                    <div className="border-t border-slate-200 dark:border-white/10">
                                         <div className="p-4 md:p-6 pt-2 space-y-4 md:space-y-6">
                                             <div className="flex overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] border-b border-slate-200 dark:border-white/10">
                                                 {(['resp', 'learn', 'impact'] as const).map((tab) => (
@@ -153,7 +144,7 @@ export default function AboutClient({ profile, experiences, educations }: AboutC
                                                     >
                                                         {tab === 'resp' ? t('about.tabs.responsibilities') : tab === 'learn' ? t('about.tabs.learned') : t('about.tabs.impact')}
                                                         {(activeTabs[exp.id] || 'resp') === tab && (
-                                                            <motion.div layoutId={`tab-${exp.id}`} className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent" />
+                                                            <span className="tab-underline" />
                                                         )}
                                                     </button>
                                                 ))}
@@ -166,23 +157,21 @@ export default function AboutClient({ profile, experiences, educations }: AboutC
                                                             (activeTabs[exp.id] || 'resp') === 'learn' ? exp.what_i_learned :
                                                                 exp.impact
                                                     ).map((point, i) => (
-                                                        <motion.li
-                                                            key={i}
-                                                            initial={{ opacity: 0, x: -10 }}
-                                                            animate={{ opacity: 1, x: 0 }}
-                                                            transition={{ delay: i * 0.05 }}
-                                                            className="flex gap-3 text-sm font-medium leading-relaxed"
+                                                        <li
+                                                            key={`${exp.id}-${(activeTabs[exp.id] || 'resp')}-${i}`}
+                                                            className="animate-list-item flex gap-3 text-sm font-medium leading-relaxed"
+                                                            style={{ animationDelay: `${i * 50}ms` }}
                                                         >
                                                             <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 flex-shrink-0" />
                                                             <span className="text-black dark:text-white font-bold shadow-none text-left">{point}</span>
-                                                        </motion.li>
+                                                        </li>
                                                     ))}
                                                 </ul>
                                             </div>
                                         </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     ))}
                     {experiences.length === 0 && (
@@ -202,11 +191,10 @@ export default function AboutClient({ profile, experiences, educations }: AboutC
                             <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl overflow-hidden flex-shrink-0 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 p-2">
                                 {edu.institution_logo_url ? (
                                     <Image
-                                        src={optimizeCloudinaryUrl(edu.institution_logo_url.startsWith('http') ? edu.institution_logo_url : `${API_URL}${edu.institution_logo_url}`)}
+                                        src={optimizeCloudinaryUrl(edu.institution_logo_url || '')}
                                         alt={edu.institution_name}
                                         width={56}
                                         height={56}
-                                        unoptimized
                                         className="w-full h-full object-contain"
                                     />
                                 ) : (

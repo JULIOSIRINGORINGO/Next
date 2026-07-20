@@ -1,26 +1,63 @@
 import { Providers } from '@/components/Providers'
 import { getMessages } from 'next-intl/server'
-import { Locale } from '@/i18n/routing'
+import { Locale, routing } from '@/i18n/routing'
 import SidebarWrapper from '@/components/SidebarWrapper'
-import AccentColorLoader from '@/components/AccentColorLoader'
+import { prisma } from '@/lib/prisma'
+import { localize } from '@/lib/localize'
 
 interface LocaleLayoutProps {
   children: React.ReactNode
   params: Promise<{ locale: Locale }>
 }
 
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }))
+}
+
 export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
   const { locale } = await params
   const messages = await getMessages()
 
+  let profile: any = null
+  try {
+    const rawProfile = await prisma.profile.findFirst()
+    if (rawProfile) {
+      const p = localize(rawProfile, locale, ['fullName', 'headline', 'bioHome', 'bioAbout', 'location'])
+      profile = {
+        id: p.id,
+        name: p.fullName,
+        username: p.email?.split('@')[0] || 'username',
+        bio_home: p.bioHome,
+        bio_about: p.bioAbout,
+        location: p.location,
+        work_status: p.headline,
+        avatar_url: p.avatarUrl,
+        github_url: p.githubUrl,
+        linkedin_url: p.linkedinUrl,
+        instagram_url: null,
+        accent_color: p.accentColor,
+        email: p.email,
+        phone: p.phone,
+        website: p.website,
+        twitterUrl: p.twitterUrl,
+      }
+    }
+  } catch (err) {
+    console.error('Error fetching profile in server layout:', err)
+  }
+
+  const accentColor = profile?.accent_color || '#00c896'
+
   return (
     <Providers locale={locale} messages={messages}>
-      <AccentColorLoader />
+      <style dangerouslySetInnerHTML={{
+        __html: `:root { --accent: ${accentColor}; }`
+      }} />
       <div className="h-screen w-full overflow-hidden bg-light-bg dark:bg-dark-bg transition-colors duration-300">
         <div className="max-w-[1200px] mx-auto flex w-full h-full">
-          <SidebarWrapper />
+          <SidebarWrapper profile={profile} />
           <main className="flex-1 w-full max-w-full px-6 py-12 lg:px-16 lg:ml-[260px] h-screen overflow-y-auto">
-            <div className="max-w-4xl mx-auto w-full">
+            <div className="max-w-4xl mx-auto w-full page-enter">
               {children}
             </div>
           </main>

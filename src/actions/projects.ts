@@ -4,7 +4,7 @@ import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
-import { translateText, translateBatch } from '@/lib/translate'
+import { translateText } from '@/lib/translate'
 
 const projectSchema = z.object({
   title: z.string().min(1),

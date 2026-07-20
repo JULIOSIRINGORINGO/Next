@@ -215,8 +215,6 @@ const Sidebar: React.FC<SidebarProps> = ({ profile: profileProp }) => {
                     <p>{t('allRightsReserved')}</p>
                 </div>
             </div>
-
-            <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} />
         </>
     )
 
@@ -252,6 +250,9 @@ const Sidebar: React.FC<SidebarProps> = ({ profile: profileProp }) => {
                     {sidebarContent}
                 </div>
             </aside>
+
+            {/* Login Modal — rendered once outside sidebar content to avoid double mount */}
+            <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} />
         </>
     )
 }

@@ -3,7 +3,7 @@
 import { SessionProvider } from 'next-auth/react'
 import { NextIntlClientProvider } from 'next-intl'
 import { ReactNode } from 'react'
-import { ToastProvider } from '@/components/Toast'
+import { Toaster } from 'sonner'
 import { ThemeProvider } from '@/context/ThemeContext'
 
 interface ProvidersProps {
@@ -17,9 +17,8 @@ export function Providers({ children, locale, messages }: ProvidersProps) {
     <SessionProvider>
       <NextIntlClientProvider locale={locale} messages={messages} timeZone="Asia/Jakarta">
         <ThemeProvider>
-          <ToastProvider>
-            {children}
-          </ToastProvider>
+          <Toaster position="top-center" richColors />
+          {children}
         </ThemeProvider>
       </NextIntlClientProvider>
     </SessionProvider>

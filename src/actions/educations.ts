@@ -4,7 +4,7 @@ import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
-import { translateText, translateBatch } from '@/lib/translate'
+import { translateText } from '@/lib/translate'
 
 const eduSchema = z.object({
   institution: z.string().min(1),

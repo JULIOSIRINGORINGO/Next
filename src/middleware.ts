@@ -1,21 +1,23 @@
-import createMiddleware from 'next-intl/middleware'
 import { NextResponse } from 'next/server'
-import { auth } from '@/lib/auth'
+import type { NextRequest } from 'next/server'
+import { getSession } from '@/lib/auth-edge'
+import createMiddleware from 'next-intl/middleware'
 import { routing } from '@/i18n/routing'
 
 const intlMiddleware = createMiddleware(routing)
 
-export default auth((req) => {
+export async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname
-  const isLoggedIn = !!req.auth
 
-  // /id/dashboard or /en/dashboard → redirect to /dashboard (admin)
   if (/^\/(id|en)\/dashboard/.test(pathname)) {
     return NextResponse.redirect(new URL('/dashboard', req.url))
   }
 
   const isAdminRoute = pathname.startsWith('/dashboard')
   const isLoginPage = pathname.startsWith('/login')
+
+  const session = await getSession(req)
+  const isLoggedIn = !!session
 
   if (isAdminRoute && !isLoggedIn) {
     const loginUrl = new URL('/login', req.url)
@@ -27,16 +29,12 @@ export default auth((req) => {
     return NextResponse.redirect(new URL('/dashboard', req.url))
   }
 
-  if (isAdminRoute) {
+  if (isAdminRoute || isLoginPage) {
     return NextResponse.next()
   }
 
-  if (isLoginPage) {
-    return NextResponse.next()
-  }
-
-  return intlMiddleware(req as any)
-})
+  return intlMiddleware(req)
+}
 
 export const config = {
   matcher: ['/((?!api|_next|_vercel|.*\\..*).*)'],

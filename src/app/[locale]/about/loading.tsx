@@ -1,28 +1,32 @@
 export default function Loading() {
   return (
-    <div className="min-h-screen">
-      <section className="min-h-screen flex items-center justify-center">
-        <div className="container mx-auto px-4 py-20">
-          <div className="max-w-4xl mx-auto space-y-12">
-            <div className="flex flex-col md:flex-row gap-12 items-start">
-              <div className="flex-1 space-y-4">
-                <div className="h-8 w-48 bg-muted rounded-full animate-pulse" />
-                <div className="h-4 w-64 bg-muted rounded animate-pulse" />
-                <div className="space-y-2 mt-6">
-                  <div className="h-4 w-full bg-muted rounded animate-pulse" />
-                  <div className="h-4 w-5/6 bg-muted rounded animate-pulse" />
-                  <div className="h-4 w-3/4 bg-muted rounded animate-pulse" />
-                </div>
-              </div>
-              <div className="w-48 h-48 bg-muted rounded-2xl animate-pulse flex-shrink-0" />
-            </div>
-            <div className="space-y-6">
-              <div className="h-8 w-32 bg-muted rounded-full animate-pulse" />
-              {[1, 2, 3].map(i => (
-                <div key={i} className="h-24 w-full bg-muted rounded-xl animate-pulse" />
-              ))}
-            </div>
-          </div>
+    <div className="py-12 md:py-16 space-y-20">
+      <section className="space-y-4 animate-pulse">
+        <div className="h-8 w-48 bg-muted rounded-lg" />
+        <div className="space-y-2 pt-2">
+          <div className="h-4 w-full bg-muted rounded" />
+          <div className="h-4 w-5/6 bg-muted rounded" />
+          <div className="h-4 w-3/4 bg-muted rounded" />
+        </div>
+        <div className="pt-4 space-y-1">
+          <div className="h-4 w-32 bg-muted rounded" />
+          <div className="h-10 w-24 bg-muted rounded-lg" />
+        </div>
+      </section>
+      <section className="space-y-4">
+        <div className="h-6 w-40 bg-muted rounded animate-pulse" />
+        <div className="space-y-4">
+          {[1, 2, 3].map(i => (
+            <div key={i} className="h-20 w-full bg-muted rounded-2xl animate-pulse" />
+          ))}
+        </div>
+      </section>
+      <section className="space-y-4">
+        <div className="h-6 w-32 bg-muted rounded animate-pulse" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[1, 2].map(i => (
+            <div key={i} className="h-28 bg-muted rounded-2xl animate-pulse" />
+          ))}
         </div>
       </section>
     </div>

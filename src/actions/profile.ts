@@ -108,12 +108,6 @@ export async function getProfile() {
   return prisma.profile.findUnique({ where: { userId: session.user.id } })
 }
 
-export async function getPublicProfile() {
-  return prisma.profile.findFirst({
-    include: { user: { select: { email: true, role: true } } },
-  })
-}
-
 export async function updateAccentColor(color: string) {
   const session = await auth()
   if (!session?.user?.id) throw new Error('No user ID')
