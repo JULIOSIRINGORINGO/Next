@@ -237,8 +237,8 @@ const Sidebar: React.FC<SidebarProps> = ({ profile: profileProp }) => {
                 />
             )}
 
-            {/* Desktop Sidebar — fixed positioning */}
-            <aside className="hidden lg:flex fixed top-0 left-0 z-[100] h-screen w-[260px] bg-light-sidebar dark:bg-dark-sidebar border-r border-slate-200 dark:border-white/10 flex-col overflow-hidden no-scrollbar">
+            {/* Desktop Sidebar — sticky within centered container */}
+            <aside className="hidden lg:flex sticky top-0 h-screen w-[260px] flex-shrink-0 bg-light-sidebar dark:bg-dark-sidebar border-r border-slate-200 dark:border-white/10 flex-col overflow-hidden no-scrollbar">
                 {sidebarContent}
             </aside>
 
