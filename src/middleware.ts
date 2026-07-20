@@ -14,20 +14,13 @@ export async function middleware(req: NextRequest) {
   }
 
   const isAdminRoute = pathname.startsWith('/dashboard')
-  const isLoginPage = pathname.startsWith('/login')
 
-  if (isAdminRoute || isLoginPage) {
+  if (isAdminRoute) {
     const session = await getSession(req)
     const isLoggedIn = !!session
 
-    if (isAdminRoute && !isLoggedIn) {
-      const loginUrl = new URL('/login', req.url)
-      loginUrl.searchParams.set('callbackUrl', req.nextUrl.pathname)
-      return NextResponse.redirect(loginUrl)
-    }
-
-    if (isLoginPage && isLoggedIn) {
-      return NextResponse.redirect(new URL('/dashboard', req.url))
+    if (!isLoggedIn) {
+      return NextResponse.redirect(new URL('/', req.url))
     }
 
     return NextResponse.next()
