@@ -12,14 +12,11 @@ function TechBadge({ tech }: { tech: string }) {
 
     return (
         <div className="flex flex-col items-center justify-center gap-1">
-            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-slate-50 dark:bg-white/5 backdrop-blur-sm border border-slate-200 dark:border-white/10 group-hover:border-accent transition-all duration-300 hover:scale-110" title={tech}>
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 group-hover:border-accent transition-transform duration-300 hover:scale-110" title={tech}>
                 {IconComponent ? (
                     <IconComponent
-                        className={`w-6 h-6 transition-all ${isWhite ? 'text-black dark:text-white' : ''}`}
-                        style={{
-                            color: isWhite ? undefined : brandColor,
-                            filter: 'brightness(1.15) saturate(1.1)'
-                        }}
+                        className={`w-6 h-6 ${isWhite ? 'text-black dark:text-white' : ''}`}
+                        style={{ color: isWhite ? undefined : brandColor }}
                     />
                 ) : (
                     <div className="w-6 h-6 bg-black/10 dark:bg-white/10 rounded animate-pulse" />
@@ -70,11 +67,13 @@ export default function ProjectsClient({ projects, profile }: ProjectsClientProp
                         className="group relative glass-card border-slate-200 dark:border-white/10 overflow-hidden hover:border-accent transition-all duration-500 flex flex-col h-[420px] md:h-[480px] animate-fade-in-up"
                         style={{ animationDelay: `${i * 80}ms`, animationFillMode: 'both' }}
                     >
-                        <div className="relative h-48 md:h-60 overflow-hidden bg-white/30 dark:bg-black/20 backdrop-blur-sm border-b border-slate-200 dark:border-white/10">
+                        <div className="relative h-48 md:h-60 overflow-hidden bg-white/30 dark:bg-black/20 border-b border-slate-200 dark:border-white/10">
                             {project.image_url ? (
                                 <img
                                     src={optimizeCloudinaryUrl(project.image_url || '')}
                                     alt={project.title}
+                                    loading="lazy"
+                                    decoding="async"
                                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                 />
                             ) : (
@@ -86,7 +85,7 @@ export default function ProjectsClient({ projects, profile }: ProjectsClientProp
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                             {project.featured && (
-                                <div className="absolute top-4 right-4 px-3 py-1.5 rounded-xl bg-accent text-white text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5 backdrop-blur-md">
+                                <div className="absolute top-4 right-4 px-3 py-1.5 rounded-xl bg-accent text-white text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5">
                                     <Star className="w-3.5 h-3.5 fill-white" /> {t('featured')}
                                 </div>
                             )}
@@ -121,7 +120,7 @@ export default function ProjectsClient({ projects, profile }: ProjectsClientProp
                                         href={project.live_url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl bg-accent/20 dark:bg-accent/10 backdrop-blur-md border border-accent/30 dark:border-accent/20 text-accent dark:text-accent hover:bg-accent/30 dark:hover:bg-accent/20 text-xs font-black transition-all group/btn"
+                                        className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl bg-accent/20 dark:bg-accent/10 border border-accent/30 dark:border-accent/20 text-accent dark:text-accent hover:bg-accent/30 dark:hover:bg-accent/20 text-xs font-black transition-all group/btn"
                                     >
                                         <ExternalLink className="w-4 h-4 transition-transform group-hover/btn:scale-110" /> {t('demo')}
                                     </a>
@@ -131,7 +130,7 @@ export default function ProjectsClient({ projects, profile }: ProjectsClientProp
                                         href={project.github_url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl bg-black/5 dark:bg-white/5 backdrop-blur-md border border-black/10 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 text-xs font-bold transition-all group/btn text-light-text dark:text-white"
+                                        className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 text-xs font-bold transition-all group/btn text-light-text dark:text-white"
                                     >
                                         <Github className="w-4 h-4 transition-transform group-hover/btn:scale-110" /> {t('code')}
                                     </a>

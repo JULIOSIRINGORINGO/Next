@@ -251,7 +251,7 @@ const Sidebar: React.FC<SidebarProps> = ({ profile: profileProp }) => {
 
             {/* Mobile Sidebar — fixed overlay */}
             <aside
-                className={`lg:hidden fixed top-0 left-0 z-40 h-[100dvh] w-[240px] bg-light-sidebar dark:bg-dark-sidebar border-r border-slate-200 dark:border-white/10 flex flex-col transition-transform duration-500 ease-in-out overflow-hidden ${mobileOpen ? 'translate-x-0' : '-translate-x-full'
+                className={`lg:hidden fixed top-0 left-0 z-40 h-[100dvh] w-[240px] bg-light-sidebar dark:bg-dark-sidebar border-r border-slate-200 dark:border-white/10 flex flex-col transition-transform duration-200 ease-in-out overflow-hidden ${mobileOpen ? 'translate-x-0' : '-translate-x-full'
                     }`}
             >
                 <div className="flex-1 overflow-hidden w-full no-scrollbar pb-20">

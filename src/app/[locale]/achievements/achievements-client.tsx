@@ -58,11 +58,13 @@ export default function AchievementsClient({ achievements, profile }: Achievemen
                                 </span>
                             </div>
 
-                            <div className="relative h-36 md:h-44 overflow-hidden bg-white/30 dark:bg-black/20 border-b border-slate-200 dark:border-white/10 group-hover:bg-white/40 dark:group-hover:bg-black/30 backdrop-blur-sm transition-colors">
+                            <div className="relative h-36 md:h-44 overflow-hidden bg-white/30 dark:bg-black/20 border-b border-slate-200 dark:border-white/10 group-hover:bg-white/40 dark:group-hover:bg-black/30 transition-colors">
                                 {hasImage && !isPdf ? (
                                     <img
                                         src={item.image_url}
                                         alt={item.title}
+                                        loading="lazy"
+                                        decoding="async"
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                     />
                                 ) : (
