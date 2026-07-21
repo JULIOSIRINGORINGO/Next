@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Search } from 'lucide-react'
 import { toast } from 'sonner'
 import { techList } from '@/lib/techList'
@@ -23,14 +23,14 @@ export default function SkillsPage() {
       .finally(() => setLoading(false))
   }, [])
 
-  const filtered = techList.filter(t =>
+  const filtered = useMemo(() => techList.filter(t =>
     t.name.toLowerCase().includes(search.toLowerCase())
-  )
+  ), [search])
 
-  const grouped = CATEGORIES.map(cat => ({
+  const grouped = useMemo(() => CATEGORIES.map(cat => ({
     category: cat,
     items: filtered.filter(t => filterByCategory(t.slug, cat)),
-  })).filter(g => g.items.length > 0)
+  })).filter(g => g.items.length > 0), [filtered])
 
   const activeCount = activeSlugs.size
 
@@ -99,7 +99,7 @@ export default function SkillsPage() {
 
       {loading ? (
         <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-3">
-          {Array.from({ length: 30 }).map((_, i) => (
+          {Array.from({ length: 12 }).map((_, i) => (
             <div key={i} className="aspect-square rounded-xl bg-slate-100 dark:bg-slate-800 animate-pulse" />
           ))}
         </div>
@@ -118,7 +118,7 @@ export default function SkillsPage() {
                       onClick={() => handleToggle(tech)}
                       disabled={isToggling}
                       title={tech.name}
-                      className={`group relative aspect-square rounded-xl border-2 flex flex-col items-center justify-center gap-1.5 transition-all duration-300 ${
+                      className={`group relative aspect-square rounded-xl border-2 flex flex-col items-center justify-center gap-1.5 transition-all duration-150 ${
                         isToggling ? 'opacity-50 scale-95' : ''
                       }`}
                       style={
@@ -135,7 +135,7 @@ export default function SkillsPage() {
                         <div className="absolute inset-0 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800" />
                       )}
 
-                      <div className={`relative z-10 transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-105'}`}>
+                      <div className={`relative z-10 transition-transform duration-150 ${isActive ? 'scale-110' : 'group-hover:scale-105'}`}>
                         <div className={isActive ? 'text-white' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300'}>
                           <TechIcon name={tech.icon} size={28} />
                         </div>

@@ -8,15 +8,24 @@ export default async function DashboardPage() {
   const profile = await prisma.profile.findFirst()
   const name = profile?.fullName || session?.user?.email?.split('@')[0] || 'Admin'
 
-  const [projectsCount, achievementsCount, skillsCount, experiencesCount, educationCount, socialLinksCount, featuredCount] = await Promise.all([
-    prisma.project.count(),
-    prisma.achievement.count(),
-    prisma.skill.count(),
-    prisma.workExperience.count(),
-    prisma.education.count(),
-    prisma.socialLink.count(),
-    prisma.project.count({ where: { featured: true } }),
-  ])
+  const [row] = await prisma.$queryRaw<
+    { projects: bigint; achievements: bigint; skills: bigint; experiences: bigint; education: bigint; social_links: bigint; featured: bigint }[]
+  >`SELECT
+    (SELECT COUNT(*)::int FROM "Project") as projects,
+    (SELECT COUNT(*)::int FROM "Achievement") as achievements,
+    (SELECT COUNT(*)::int FROM "Skill") as skills,
+    (SELECT COUNT(*)::int FROM "WorkExperience") as experiences,
+    (SELECT COUNT(*)::int FROM "Education") as education,
+    (SELECT COUNT(*)::int FROM "SocialLink") as social_links,
+    (SELECT COUNT(*)::int FROM "Project" WHERE featured = true) as featured`
+
+  const projectsCount = Number(row.projects)
+  const achievementsCount = Number(row.achievements)
+  const skillsCount = Number(row.skills)
+  const experiencesCount = Number(row.experiences)
+  const educationCount = Number(row.education)
+  const socialLinksCount = Number(row.social_links)
+  const featuredCount = Number(row.featured)
 
   const total = projectsCount + achievementsCount + skillsCount + experiencesCount + educationCount + socialLinksCount
 

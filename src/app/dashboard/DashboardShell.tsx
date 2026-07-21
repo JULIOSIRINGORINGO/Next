@@ -159,8 +159,17 @@ export default function DashboardShell({
       timer = setTimeout(doSignOut, INACTIVITY_LIMIT)
     }
 
+    let lastReset = 0
+    const throttledReset = () => {
+      const now = Date.now()
+      if (now - lastReset > 30000) {
+        lastReset = now
+        resetTimer()
+      }
+    }
+
     const activityEvents = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart']
-    activityEvents.forEach((e) => window.addEventListener(e, resetTimer, { passive: true }))
+    activityEvents.forEach((e) => window.addEventListener(e, throttledReset, { passive: true }))
     resetTimer()
 
     // When this tab closes, tell all other tabs to log out
@@ -182,7 +191,7 @@ export default function DashboardShell({
 
     return () => {
       clearTimeout(timer)
-      activityEvents.forEach((e) => window.removeEventListener(e, resetTimer))
+      activityEvents.forEach((e) => window.removeEventListener(e, throttledReset))
       window.removeEventListener('beforeunload', handleBeforeUnload)
       broadcastChannel?.close()
     }
@@ -214,7 +223,7 @@ export default function DashboardShell({
 
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-[260px] flex-col bg-slate-900 dark:bg-slate-950 transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:z-auto border-r border-slate-800 ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-[260px] flex-col bg-slate-900 dark:bg-slate-950 transition-transform duration-150 ease-in-out lg:translate-x-0 lg:static lg:z-auto border-r border-slate-800 ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
