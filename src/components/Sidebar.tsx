@@ -41,6 +41,7 @@ const Sidebar: React.FC<SidebarProps> = ({ profile: profileProp }) => {
     const [mobileOpen, setMobileOpen] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
     const [displayLocale, setDisplayLocale] = useState(locale)
+    const [isSwitching, setIsSwitching] = useState(false)
 
     useEffect(() => {
         setDisplayLocale(locale)
@@ -113,9 +114,11 @@ const Sidebar: React.FC<SidebarProps> = ({ profile: profileProp }) => {
     }
 
     const handleLanguageSwitch = (lang: 'en' | 'id') => {
+        if (lang === locale) return
         localStorage.setItem('portfolio_locale', lang)
         document.cookie = `NEXT_LOCALE=${lang};path=/;max-age=31536000`
         setDisplayLocale(lang)
+        setIsSwitching(true)
         router.replace(pathname, { locale: lang })
     }
 
@@ -262,6 +265,16 @@ const Sidebar: React.FC<SidebarProps> = ({ profile: profileProp }) => {
 
             {/* Login Modal — rendered once outside sidebar content to avoid double mount */}
             <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} />
+
+            {/* Language Switch Loading Overlay */}
+            {isSwitching && (
+                <div className="fixed inset-0 z-[100] bg-light-bg dark:bg-dark-bg flex items-center justify-center">
+                    <div className="flex flex-col items-center gap-4">
+                        <div className="w-10 h-10 border-4 border-accent/30 border-t-accent rounded-full animate-spin" />
+                        <p className="text-sm font-bold text-black/50 dark:text-white/50">Loading...</p>
+                    </div>
+                </div>
+            )}
         </>
     )
 }
