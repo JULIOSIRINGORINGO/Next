@@ -266,12 +266,11 @@ const Sidebar: React.FC<SidebarProps> = ({ profile: profileProp }) => {
             {/* Login Modal — rendered once outside sidebar content to avoid double mount */}
             <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} />
 
-            {/* Language Switch Loading Overlay */}
+            {/* Language Switch Loading Overlay — content area only */}
             {isSwitching && (
-                <div className="fixed inset-0 z-[100] bg-light-bg dark:bg-dark-bg flex items-center justify-center">
+                <div className="fixed top-0 left-0 lg:left-[260px] right-0 bottom-0 z-[25] bg-light-bg dark:bg-dark-bg flex items-center justify-center animate-fade-in">
                     <div className="flex flex-col items-center gap-4">
-                        <div className="w-10 h-10 border-4 border-accent/30 border-t-accent rounded-full animate-spin" />
-                        <p className="text-sm font-bold text-black/50 dark:text-white/50">Loading...</p>
+                        <div className="w-8 h-8 border-3 border-accent/30 border-t-accent rounded-full animate-spin" />
                     </div>
                 </div>
             )}
