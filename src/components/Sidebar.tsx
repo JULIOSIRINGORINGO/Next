@@ -40,6 +40,11 @@ const Sidebar: React.FC<SidebarProps> = ({ profile: profileProp }) => {
     const [profile, setProfile] = useState<Profile | null>(profileProp ?? null)
     const [mobileOpen, setMobileOpen] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
+    const [displayLocale, setDisplayLocale] = useState(locale)
+
+    useEffect(() => {
+        setDisplayLocale(locale)
+    }, [locale])
 
     const navItems = [
         { to: '/', icon: Home, label: t('nav.home') },
@@ -110,6 +115,7 @@ const Sidebar: React.FC<SidebarProps> = ({ profile: profileProp }) => {
     const handleLanguageSwitch = (lang: 'en' | 'id') => {
         localStorage.setItem('portfolio_locale', lang)
         document.cookie = `NEXT_LOCALE=${lang};path=/;max-age=31536000`
+        setDisplayLocale(lang)
         router.replace(pathname, { locale: lang })
     }
 
@@ -143,13 +149,13 @@ const Sidebar: React.FC<SidebarProps> = ({ profile: profileProp }) => {
                     <div className="flex bg-slate-100 dark:bg-white/5 p-1 rounded-full border border-slate-200 dark:border-white/10">
                         <button
                             onClick={() => handleLanguageSwitch('en')}
-                            className={`px-3 py-1 rounded-full text-xs font-bold transition-all duration-150 ${locale === 'en' ? 'bg-accent text-white' : 'text-black dark:text-white hover:text-accent'}`}
+                            className={`px-3 py-1 rounded-full text-xs font-bold transition-all duration-150 ${displayLocale === 'en' ? 'bg-accent text-white' : 'text-black dark:text-white hover:text-accent'}`}
                         >
                             EN
                         </button>
                         <button
                             onClick={() => handleLanguageSwitch('id')}
-                            className={`px-3 py-1 rounded-full text-xs font-bold transition-all duration-150 ${locale === 'id' ? 'bg-accent text-white' : 'text-black dark:text-white hover:text-accent'}`}
+                            className={`px-3 py-1 rounded-full text-xs font-bold transition-all duration-150 ${displayLocale === 'id' ? 'bg-accent text-white' : 'text-black dark:text-white hover:text-accent'}`}
                         >
                             ID
                         </button>
