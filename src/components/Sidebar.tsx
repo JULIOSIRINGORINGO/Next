@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useTransition } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, usePathname, useRouter } from '@/i18n/navigation'
 import Image from 'next/image'
 import { Home, User, Trophy, FolderOpen, BarChart3, Mail, Moon, Sun, Menu, X } from 'lucide-react'
@@ -40,7 +40,6 @@ const Sidebar: React.FC<SidebarProps> = ({ profile: profileProp }) => {
     const [profile, setProfile] = useState<Profile | null>(profileProp ?? null)
     const [mobileOpen, setMobileOpen] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
-    const [isPending, startTransition] = useTransition()
 
     const navItems = [
         { to: '/', icon: Home, label: t('nav.home') },
@@ -111,9 +110,7 @@ const Sidebar: React.FC<SidebarProps> = ({ profile: profileProp }) => {
     const handleLanguageSwitch = (lang: 'en' | 'id') => {
         localStorage.setItem('portfolio_locale', lang)
         document.cookie = `NEXT_LOCALE=${lang};path=/;max-age=31536000`
-        startTransition(() => {
-            router.replace(pathname, { locale: lang })
-        })
+        router.replace(pathname, { locale: lang })
     }
 
     const avatarUrl = optimizeCloudinaryUrl(profile?.avatar_url)
@@ -146,17 +143,15 @@ const Sidebar: React.FC<SidebarProps> = ({ profile: profileProp }) => {
                     <div className="flex bg-slate-100 dark:bg-white/5 p-1 rounded-full border border-slate-200 dark:border-white/10">
                         <button
                             onClick={() => handleLanguageSwitch('en')}
-                            disabled={isPending}
                             className={`px-3 py-1 rounded-full text-xs font-bold transition-all duration-150 ${locale === 'en' ? 'bg-accent text-white' : 'text-black dark:text-white hover:text-accent'}`}
                         >
-                            {isPending && locale !== 'en' ? '...' : 'EN'}
+                            EN
                         </button>
                         <button
                             onClick={() => handleLanguageSwitch('id')}
-                            disabled={isPending}
                             className={`px-3 py-1 rounded-full text-xs font-bold transition-all duration-150 ${locale === 'id' ? 'bg-accent text-white' : 'text-black dark:text-white hover:text-accent'}`}
                         >
-                            {isPending && locale !== 'id' ? '...' : 'ID'}
+                            ID
                         </button>
                     </div>
                 </div>
