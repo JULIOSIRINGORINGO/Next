@@ -16,7 +16,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
     ])
 
     if (rawProfile) {
-      const p = localize(rawProfile, locale, ['fullName', 'headline', 'bioHome', 'location'])
+      const p = localize(rawProfile, locale, ['fullName', 'headline', 'bioHome'])
       profile = {
         name: p.fullName,
         location: p.location,

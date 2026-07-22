@@ -22,7 +22,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   try {
     const rawProfile = await prisma.profile.findFirst()
     if (rawProfile) {
-      const p = localize(rawProfile, locale, ['fullName', 'headline', 'bioHome', 'bioAbout', 'location'])
+      const p = localize(rawProfile, locale, ['fullName', 'headline', 'bioHome', 'bioAbout'])
       profile = {
         id: p.id,
         name: p.fullName,

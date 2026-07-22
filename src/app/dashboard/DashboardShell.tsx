@@ -151,7 +151,7 @@ export default function DashboardShell({
     let broadcastChannel: BroadcastChannel | null = null
 
     const doSignOut = () => {
-      signOut({ callbackUrl: '/login' })
+      signOut({ callbackUrl: '/id' })
     }
 
     const resetTimer = () => {

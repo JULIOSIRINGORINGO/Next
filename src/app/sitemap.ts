@@ -24,12 +24,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
-  entries.push({
-    url: `${BASE_URL}/login`,
-    lastModified: new Date(),
-    changeFrequency: 'never',
-    priority: 0,
-  })
-
   return entries
 }
