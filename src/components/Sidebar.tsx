@@ -144,7 +144,7 @@ const Sidebar: React.FC<SidebarProps> = ({ profile: profileProp }) => {
                 </div>
                 <h3 className="font-bold text-base text-black dark:text-white">{profile?.name || 'Your Name'}</h3>
                 <p className="text-sm text-black dark:text-white mt-1 font-bold">
-                    @{profile?.username || 'username'}
+                    {profile?.username || 'username'}
                 </p>
 
                 {/* Language Toggle */}
