@@ -10,7 +10,7 @@ export default async function ProfilePage() {
   const session = await auth()
   const profile = await prisma.profile.findUnique({ where: { userId: session!.user.id! } })
   const locale = await getDashboardLocale()
-  const p = profile ? localize(profile, locale, ['fullName', 'headline', 'bioHome', 'bioAbout', 'location']) : null
+  const p = profile ? localize(profile, locale, ['fullName', 'headline', 'bioHome', 'bioAbout']) : null
 
   const avatarUrl = optimizeCloudinaryUrl(profile?.avatarUrl)
 

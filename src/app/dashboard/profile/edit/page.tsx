@@ -15,7 +15,7 @@ const profileSchema = z.object({
   headline: z.string().optional(),
   bioHome: z.string().optional(),
   bioAbout: z.string().optional(),
-  email: z.string().email().optional().or(z.literal('')),
+  email: z.string().optional().or(z.literal('')),
   phone: z.string().optional(),
   location: z.string().optional(),
   website: z.string().url().optional().or(z.literal('')),
@@ -214,7 +214,7 @@ export default function EditProfilePage() {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <label htmlFor="email" className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Email</label>
-                  <input id="email" type="email" {...register('email')} className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white rounded-lg focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent text-sm" />
+                  <input id="email" {...register('email')} className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white rounded-lg focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent text-sm" />
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="phone" className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Phone</label>
