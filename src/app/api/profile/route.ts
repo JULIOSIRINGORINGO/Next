@@ -9,7 +9,7 @@ export async function GET() {
     return NextResponse.json({
       name: profile.fullName,
       fullName: profile.fullName,
-      username: profile.email?.split('@')[0] || 'username',
+      username: profile.email || 'username',
       bio_home: profile.bioHome,
       bio_about: profile.bioAbout,
       location: profile.location,

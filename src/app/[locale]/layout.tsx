@@ -26,7 +26,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
       profile = {
         id: p.id,
         name: p.fullName,
-        username: p.email?.split('@')[0] || 'username',
+        username: p.email || 'username',
         bio_home: p.bioHome,
         bio_about: p.bioAbout,
         location: p.location,
