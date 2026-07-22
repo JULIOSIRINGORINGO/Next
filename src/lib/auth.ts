@@ -22,18 +22,7 @@ declare module 'next-auth' {
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  session: { strategy: 'jwt' },
-  cookies: {
-    sessionToken: {
-      options: {
-        maxAge: undefined,
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/',
-        secure: true,
-      },
-    },
-  },
+  session: { strategy: 'jwt', maxAge: 4 * 60 * 60 },
   pages: {
     signIn: '/id',
     error: '/id',
