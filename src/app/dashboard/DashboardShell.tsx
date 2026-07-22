@@ -142,11 +142,11 @@ export default function DashboardShell({
     return () => window.removeEventListener('locale-changed', onLocaleChanged)
   }, [profileAccent])
 
-  // Inactivity auto-logout (15 min) + tab close logout
+  // Inactivity auto-logout (5 min) + browser close logout via sendBeacon
   useEffect(() => {
     if (status !== 'authenticated') return
 
-    const INACTIVITY_LIMIT = 15 * 60 * 1000 // 15 minutes
+    const INACTIVITY_LIMIT = 5 * 60 * 1000 // 5 minutes
     let timer: ReturnType<typeof setTimeout>
     let broadcastChannel: BroadcastChannel | null = null
 
@@ -172,10 +172,12 @@ export default function DashboardShell({
     activityEvents.forEach((e) => window.addEventListener(e, throttledReset, { passive: true }))
     resetTimer()
 
-    // When this tab closes, tell all other tabs to log out
+    // Browser close: sendBeacon fires even during page unload
     const handleBeforeUnload = () => {
       try {
         broadcastChannel?.postMessage('logout')
+        const blob = new Blob([], { type: 'text/plain' })
+        navigator.sendBeacon('/api/auth/signout', blob)
       } catch {}
     }
 
