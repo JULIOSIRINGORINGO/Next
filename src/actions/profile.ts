@@ -17,7 +17,7 @@ const profileSchema = z.object({
   bioAboutEn: z.string().optional(),
   avatarUrl: z.string().url().optional().or(z.literal('')).nullable(),
   accentColor: z.string().optional(),
-  email: z.string().email().optional().or(z.literal('')).nullable(),
+  email: z.string().optional().or(z.literal('')).nullable(),
   phone: z.string().optional(),
   location: z.string().optional(),
   locationEn: z.string().optional(),
